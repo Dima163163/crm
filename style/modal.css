@@ -9,7 +9,8 @@
 	background-color: var(--white, #fff);
 }
 
-.modal-open {
+.modal {
+	display: none;
 	position: relative;
 	background-color: var(--white-gray, #F2F0F9);
 	max-width: 792px;
@@ -17,7 +18,11 @@
 	min-height: 613px;
 }
 
-.modal-open__wrapper {
+.modal-open {
+	display: flex;
+}
+
+.modal__wrapper {
 	display: flex;
 	flex-direction: column;
 	min-width: 580px;
@@ -45,7 +50,8 @@
 	text-transform: uppercase;
 }
 
-.modal__id {
+.modal__id,
+.modal__id-number {
 	font-size: 10px;
 	color: var(--gray, #C5C5C5);
 }
