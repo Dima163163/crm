@@ -18,9 +18,9 @@
 	min-height: 613px;
 }
 
-.modal-open {
+/* .modal-open {
 	display: flex;
-}
+} */
 
 .modal__wrapper {
 	display: flex;
