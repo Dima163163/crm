@@ -1,0 +1,135 @@
+.overlay {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	gap: 42px;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-color: var(--white, #fff);
+}
+
+.modal-open {
+	position: relative;
+	background-color: var(--white-gray, #F2F0F9);
+	max-width: 792px;
+	width: 100%;
+	min-height: 613px;
+}
+
+.modal-open__wrapper {
+	display: flex;
+	flex-direction: column;
+	min-width: 580px;
+	min-height: 620px;
+	padding: 32px 106px 28px 106px;
+}
+
+.modal__title-wrapper {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-bottom: 1px solid var(--fonts-stroke);
+	margin-bottom: 21px;
+	padding-bottom: 21px;
+}
+
+.modal__title {
+	color: var(--pale-purple, #6E6893);
+	font-family: Inter, sans-serif;
+	font-size: 24px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: normal;
+	letter-spacing: 2.4px;
+	text-transform: uppercase;
+}
+
+.modal__id {
+	font-size: 10px;
+	color: var(--gray, #C5C5C5);
+}
+
+.modal-close {
+	position: absolute;
+	top: 20px;
+	right: 30px;
+	width: 20px;
+	height: 20px;
+}
+
+.modal-close-error {
+	position: absolute;
+	top: 26px;
+	right: 39px;
+	width: 20px;
+	height: 20px;
+}
+
+.modal-error {
+	padding: 26px 29px;
+	position: absolute;
+	display: block;
+	background: var(--white-gray, #F2F0F9);
+	box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.25);
+	max-width: 350px;
+	width: 100%;
+	min-height: 350px;
+	left: 26%;
+	top: 21%;
+}
+
+.modal-error__wrapper {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 298px;
+	gap: 33px;
+}
+
+.modal-error__img {
+	background-image: url('../img/error.svg');
+	background-repeat: no-repeat;
+	width: 90px;
+	height: 90px;
+}
+
+.modal-error__text {
+	font-size: 18px;
+	letter-spacing: 1.8px;
+	text-transform: uppercase;
+	font-weight: 700;
+	color: var(--pale-purple, #6E6893);
+}
+
+@media (max-width: 830px) {
+	.overlay {
+		height: 100%;
+	}
+
+	.modal-open {
+		max-width: 70%;
+		min-height: 1000px;
+	}
+
+	.modal-open__wrapper {
+		padding: 60px;
+		min-width: 100%;
+		align-items: center;
+	}
+
+	.modal__title-wrapper {
+		text-align: center;
+		flex-direction: column;
+		max-width: 76%;
+	}
+
+	.modal-bottom-wrapper {
+		flex-wrap: wrap;
+		min-width: 70%;
+		flex-direction: column;
+		align-content: center;
+		align-items: center;
+	}
+}

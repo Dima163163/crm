@@ -1,0 +1,158 @@
+.table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.thead {
+	background: var(--ligth-gray, #F4F2FF);
+}
+
+.table__column {
+	border: none;
+	padding: 0;
+	color: var(--pale-purple, #6E6893);
+	font-family: Inter;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: 600;
+	line-height: normal;
+	letter-spacing: 0.6px;
+	text-transform: uppercase;
+	padding: 15px 0px;
+	text-align: start;
+}
+
+.table__column-id {
+	padding-left: 15px;
+	width: 10%;
+}
+
+.table__column-name {
+	width: 25%;
+}
+
+.table__column-category {
+	width: 18%;
+}
+
+.table__column-units {
+	width: 7%;
+	text-align: center;
+}
+
+.table__column-sum {
+	text-align: center;
+	width: 12%;
+}
+
+.table__column-price {
+	width: 7%;
+}
+
+.table__column-total {
+	width: 7%;
+}
+
+.table__column-icon {
+	width: 4%;
+}
+
+tr:not(:last-child) {
+	border-top: 1px solid var(--fonts-stroke, #C6C2De);
+	border-bottom: 1px solid var(--fonts-stroke, #C6C2De);
+}
+
+td {
+	text-align: start;
+}
+
+.td-btn-wrapper {
+	display: flex;
+	gap: 20px;
+}
+
+.td-unit {
+	color: var(--pale-purple, #6E6893);
+	text-align: center;
+	font-family: Inter;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: normal;
+}
+
+.td-button {
+	background-repeat: no-repeat;
+	width: 20px;
+	height: 20px;
+}
+
+.td-button_no-image {
+	background-image: url('../img/no-image.svg');
+}
+
+.td-button_image {
+	background-image: url('../img/image.svg');
+}
+
+.td-button_edit {
+	background-image: url('../img/edit.svg');
+}
+
+.td-button_delete {
+	background-image: url('../img/delete.svg');
+}
+
+.td-first {
+	padding: 21px 15px 21px 15px;
+}
+
+.td {
+	padding: 21px 14px  21px 0;
+}
+
+.td-last {
+	padding: 21px 15px 21px 50px;
+}
+
+.td-sum {
+	text-align: center;
+}
+
+.table-bottom {
+	display: flex;
+	gap: 50px;
+	width: 100%;
+	background-color: var(--ligth-gray, #F4F2FF);
+	padding: 15px 20px;
+	justify-content: end;
+	border-radius: 0 0 16px 16px;
+}
+
+.table-bottom__btn {
+	display: flex;
+	align-items: center;
+}
+
+.table-bottom__btn-text {
+	margin-right: 5px;
+}
+
+.btn-block {
+	display: flex;
+	gap: 50px;
+}
+
+.btn-left {
+	background-image: url('../img/left.svg');
+	background-repeat: no-repeat;
+	width: 6px;
+	height: 10px;
+}
+
+.btn-right {
+	background-image: url('../img/right.svg');
+	background-repeat: no-repeat;
+	width: 6px;
+	height: 10px;
+}

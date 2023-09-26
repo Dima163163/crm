@@ -1,0 +1,9 @@
+.total-cost {
+	display: inline-block;
+	font-weight: 500;
+	color: var(--pale-purple, #6E6893);
+}
+
+.total-cost__span {
+	color: var(--dark-purple, #6D5BD0);
+}

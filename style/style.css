@@ -1,0 +1,26 @@
+@import "normalize.css";
+@import "var.css";
+@import "global.css";
+@import "modal.css";
+@import "total.css";
+@import "crm.css";
+@import "cms.css";
+@import "table.css";
+
+@font-face { 
+    font-family: "Inter";
+    src: local('Inter'), local('Inter-Bold'),
+    url("../fonts/Inter-Bold.woff") format("woff"),
+    url("../fonts/Inter-Bold.woff2") format("woff2");
+    font-display: swap;
+    font-weight: 700;
+}
+
+@font-face { 
+    font-family: "Inter";
+    src: local('Inter'), local('Inter-SemiBold'),
+    url("../fonts/Inter-SemiBold.woff") format("woff"),
+    url("../fonts/Inter-SemiBold.woff2") format("woff2");
+    font-display: swap;
+    font-weight: 600;
+}
