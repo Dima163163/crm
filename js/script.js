@@ -13,24 +13,16 @@ const totalPrice = document.querySelector('.total-cost__span');
 const addProduct = document.querySelector('.cms-btn');
 const overlayModal = document.querySelector('.overlay');
 
-// Функция открытия модального окна
-const openModal = () => {
-  modal.classList.add('modal-open');
-  const modalOpen = document.querySelector('.modal-open');
-
-  overlayModal.style = 'opacity: 1; visibility: visible; display: flex;';
-  modalOpen.style = 'display: flex;'
+// Функция открытия модального окна и закрытия 
+const openCloseModal = () => {
+  modal.classList.toggle('modal-open');
+  overlayModal.classList.toggle('is-visible');
 };
-
-// Функция закрытия модального окна
-const closeModal = () => {
-  overlayModal.style = 'opacity: 0; visibility: hidden; display: none;';
-  modal.classList.remove('modal-open');
-}
 
 modal.addEventListener('click', event => {
   event.stopImmediatePropagation();
 })
-addProduct.addEventListener('click', openModal);
-closeBtn.addEventListener('click', closeModal);
-overlayModal.addEventListener('click', closeModal);
+
+addProduct.addEventListener('click', openCloseModal);
+closeBtn.addEventListener('click', openCloseModal);
+overlayModal.addEventListener('click', openCloseModal);

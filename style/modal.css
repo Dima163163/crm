@@ -17,6 +17,12 @@
 	opacity: 0;
 }
 
+.overlay.is-visible {
+	display: flex;
+	opacity: 1;
+  visibility: visible;
+}
+
 .modal {
 	display: none;
 	position: absolute;
@@ -31,9 +37,9 @@
 	
 }
 
-/* .modal-open {
+.modal.modal-open {
 	display: flex;
-} */
+}
 
 .modal__wrapper {
 	display: flex;
