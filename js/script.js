@@ -11,10 +11,12 @@ const checkboxInput = document.querySelector('.crm__discont-input');
 const totalTitle = document.querySelector('.total-cost');
 const totalPrice = document.querySelector('.total-cost__span');
 
+
 modal.classList.add('modal-open');
 const modalOpen = document.querySelector('.modal-open');
 
 modalOpen.style = 'display: flex;'
+
 
 console.log(modal);
 console.log(title);
