@@ -63,7 +63,6 @@ const arr = [
 // Функция создания строки
 const createRow = (obj) => {
   const tr = document.createElement('tr');
-  table.append(tr);
 
   const iterableObj = (obj) => {
     for (const key in obj) {
@@ -71,18 +70,27 @@ const createRow = (obj) => {
         iterableObj(obj[key])
       } else {
         tr.insertAdjacentHTML('beforeend', `<td>${obj[key]}</td>`);
+        table.append(tr);
       }
     }
-  }
+  };
 
   iterableObj(obj)
-}
+  const btnDelete = document.createElement('button');
+  btnDelete.classList.add('btn', 'btn-danger', 'mt-1');
+  btnDelete.textContent = 'Удалить';
+  tr.append(btnDelete);
+
+  return {
+    tr,
+    btnDelete
+  }
+};
 
 // Функция перебора массива с объектами
-
 const renderGoods = (arr) => {
   const arrGoods = arr.map(item => createRow(item));
   return arrGoods;
-}
+};
 
 renderGoods(arr);
