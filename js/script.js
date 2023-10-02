@@ -21,7 +21,7 @@ const allInputSum = document.querySelectorAll('.crm__sum-input');
 
 // let newArr;
 
-const data = [
+let data = [
   {
     "id": 246016548,
     "title": "Навигационная система Soundmax",
@@ -163,18 +163,18 @@ const totalSumPage = data => {
 
 // Функция удаления продукта из таблцы
 const deleteProduct = () => {
+  let newData;
   tableList.addEventListener('click', e => {
   const target = e.target;
-  // const idElement = document.querySelector('.td-id');
-  const nameElement = document.querySelector('.td-title');
+  // const idElement = target.closest('.product-card').querySelector('.td-id');
   // const value = Number(idElement.textContent);
+  const nameElement = target.closest('.product-card').querySelector('.td-title').textContent;
   if(target.closest('.td-button_delete')) {
       target.closest('.product-card').remove();
-      const newData = data.filter((item) => {
+      newData = data.filter((item) => {
         // return item.id !== value
-        return item.title !== nameElement.textContent
+        return item.title !== nameElement
       })
-      console.log('newData', newData);
       totalSumPage(newData);
     }
   });
