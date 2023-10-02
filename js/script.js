@@ -58,6 +58,13 @@ const openCloseModal = () => {
 // Функция создания строки с товаром
 const createRow = obj => {
   const tr = document.createElement('tr');
+  tr.classList.add('product-card');
+
+  const randomId = Math.round(Math.random() * 1000000000);
+  if(!obj.id) {
+    obj.id = randomId;
+  }
+
   let totalSum;
   if(obj.discont) {
     totalSum = Math.ceil(obj.price * obj.count - (obj.price * obj.count *(obj.discont / 100)));
@@ -65,10 +72,8 @@ const createRow = obj => {
     totalSum = obj.price * obj.count;
   }
   
-  tr.classList.add('product-card');
-  
   tr.insertAdjacentHTML('beforeend', `
-      <td class="td-id">${obj.id ? obj.id : ''}</td>
+      <td class="td-id">${obj.id ? obj.id : randomId}</td>
       <td class="td-title">${obj.title}</td>
       <td>${obj.description}</td>
       <td class="td-unit">${obj.units}</td>
@@ -162,17 +167,18 @@ const totalSumPage = data => {
 const deleteProduct = () => {
   let newData;
   tableList.addEventListener('click', e => {
-  const target = e.target;
-  // const idElement = target.closest('.product-card').querySelector('.td-id');
-  // const value = Number(idElement.textContent);
-  const nameElement = target.closest('.product-card').querySelector('.td-title').textContent;
-  if(target.closest('.td-button_delete')) {
-      target.closest('.product-card').remove();
-      newData = data.filter((item) => {
-        // return item.id !== value
-        return item.title !== nameElement
-      })
-      totalSumPage(newData);
+    const target = e.target;
+    const idElement = target.closest('.product-card').querySelector('.td-id');
+    const value = Number(idElement.textContent);
+    // const nameElement = target.closest('.product-card').querySelector('.td-title').textContent;
+    if(target.closest('.td-button_delete')) {
+        target.closest('.product-card').remove();
+        newData = data.filter((item) => {
+          return item.id !== value;
+          // return item.title !== nameElement
+        })
+        console.log(newData)
+        totalSumPage(newData);
     }
   });
 }
