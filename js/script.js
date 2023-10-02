@@ -144,16 +144,13 @@ const calculatePrice = () => {
 
 //Функция высчитывания общей стоимости в таблице
 const totalSumPage = data => {
-  console.log(data);
   let totalSum = 0;
   
   data.forEach((product) => {
     if(product.discont) {
       totalSum += Math.ceil(product.price * product.count - (product.price * product.count *(product.discont / 100)));
-      console.log(totalSum);
     } else {
       totalSum += product.price * product.count;
-      console.log(totalSum);
     }
   })
 
