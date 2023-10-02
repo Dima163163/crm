@@ -22,9 +22,7 @@
 				<h2 class="cms-title">CMS</h2>
 				<p class="total-cost">
 						Итоговая стоимость: 
-						<span class="total-cost__span">
-							$ 900.00
-						</span>
+						<span class="total-cost__span"></span>
 					</p>
 			</div>
 			<div class="cms-wrapper__table">
@@ -58,7 +56,8 @@
 									<th class="table__column table__column-name">Наименование</th>
 									<th class="table__column table__column-category">Категория</th>
 									<th class="table__column table__column-units">ед/изм</th>
-									<th class="table__column table__column-sum">количество</th>
+									<th class="table__column table__column-sum">Количество</th>
+									<th class="table__column table__column-discount">Скидка(%)</th>
 									<th class="table__column table__column-price">цена</th>
 									<th class="table__column table__column-total">ИТОГ</th>
 									<th class="table__column table__column-icon"></th>
@@ -259,43 +258,41 @@
 				<button class="modal-close">
 					<img src="img/close.svg" alt="Кнопка закрытия" class="modal-close__img">
 				</button>
-				<form class="form"
-						action="https://jsonplaceholder.typicode.com/posts"
-						method="POST">
+				<form id="example" class="form">
 						<fieldset class="crm-data">
 							<fieldset class="crm">
 							<fieldset class="crm-wrapper crm__name">
 								<label for="name" class="crm-wrapper__title crm__name-title">Наименование</label>
-								<input class="crm-wrapper__input crm__name-input" type="text" name="name" id="name">
+								<input class="crm-wrapper__input crm__name-input" type="text" name="title" id="name" required>
 							</fieldset>
 							<fieldset class="crm-wrapper crm__descpiption">
 								<label for="description" class="crm-wrapper__title crm__descpiption-title">Описание</label>
-								<textarea class="crm-wrapper__textarea crm__descpiption-textarea" name="descpiption" id="descpiption">
+								<textarea class="crm-wrapper__textarea crm__descpiption-textarea" type="text" name="description" id="description" required>
 								</textarea>
 							</fieldset>
 							<fieldset class="crm-wrapper crm__category">
 								<label for="category" class="crm-wrapper__title  crm__category-title">Категория</label>
-								<input class="crm-wrapper__input crm__category-input" type="text" name="category" id="category">
+								<input class="crm-wrapper__input crm__category-input" type="text" name="category" id="category" required>
 							</fieldset>
 							<fieldset class="crm-wrapper crm__units">
 								<label for="units" class="crm-wrapper__title crm__units-title">Еденицы измерения</label>
-								<input class="crm-wrapper__input crm__units-input" type="text" name="units" id="units">
+								<input class="crm-wrapper__input crm__units-input" type="text" name="units" id="units" required>
 							</fieldset>
 							<fieldset class="crm-wrapper crm__discont">
 								<label for="discont" class="crm-wrapper__title crm__discont-title">Дисконт</label>
 								<fieldset id="discont" class="crm__discont-wrapper">
-									<input class="crm__checkbox-input" type="checkbox" name="discont-checkbox" id="discont-checkbox" checked>
+									<input class="crm__checkbox-input" type="checkbox" name="discont-checkbox" id="discont-checkbox">
 									<label for="discont-checkbox" class="crm__checkbox"></label>
-									<input class="crm-wrapper__input crm__discont-input" type="input" name="discont-checkbox" id="discont-inpit" >
+									<input class="crm-wrapper__input crm__discont-input" type="number" name="discont" id="discont-inpit" disabled>
 								</fieldset>
 							</fieldset>
 							<fieldset class="crm-wrapper crm__count">
 								<label for="count" class="crm-wrapper__title crm__count-title">Количество</label>
-								<input class="crm-wrapper__input crm__count-input" type="number" name="count" id="count">
+								<input class="crm-wrapper__input crm__count-input crm__sum-input" type="number" name="count" id="count" required>
 							</fieldset>
 							<fieldset class="crm-wrapper crm__price">
 								<label for="price" class="crm-wrapper__title crm__price-title">Цена</label>
-								<input class="crm-wrapper__input crm__price-input" type="number" name="price" id="price">
+								<input class="crm-wrapper__input crm__price-input crm__sum-input" type="number" name="price" id="price" required>
 							</fieldset>
 							</fieldset>
 							<fieldset class="crm-wrapper crm-image">
@@ -307,13 +304,11 @@
 						</fieldset>
 				</form>
 				<div class="modal-bottom-wrapper">
-					<p class="total-cost">
+					<p class="total-cost-form">
 						Итоговая стоимость: 
-						<span class="total-cost__span">
-							$ 900.00
-						</span>
+						<span class="total-cost-form__span"></span>
 					</p>
-					<button type="submit" class="btn">Добавить товар</button>
+					<button type="submit" form="example" class="btn">Добавить товар</button>
 				</div>
 			</div>
 		</div>

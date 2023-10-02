@@ -115,7 +115,8 @@ td {
 	padding: 21px 15px 21px 50px;
 }
 
-.td-sum {
+.td-sum,
+.td-disc {
 	text-align: center;
 }
 
