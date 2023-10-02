@@ -69,7 +69,7 @@ const createRow = obj => {
   
   tr.insertAdjacentHTML('beforeend', `
       <td class="td-id">${obj.id ? obj.id : ''}</td>
-      <td class="td">${obj.title}</td>
+      <td class="td-title">${obj.title}</td>
       <td>${obj.description}</td>
       <td class="td-unit">${obj.units}</td>
       <td class="td-sum">${+obj.count}</td>
@@ -150,8 +150,10 @@ const totalSumPage = data => {
   data.forEach((product) => {
     if(product.discont) {
       totalSum += Math.ceil(product.price * product.count - (product.price * product.count *(product.discont / 100)));
+      console.log(totalSum);
     } else {
       totalSum += product.price * product.count;
+      console.log(totalSum);
     }
   })
 
@@ -163,13 +165,16 @@ const totalSumPage = data => {
 const deleteProduct = () => {
   tableList.addEventListener('click', e => {
   const target = e.target;
-  const idElement = document.querySelector('.td-id');
-  const value = Number(idElement.textContent);
+  // const idElement = document.querySelector('.td-id');
+  const nameElement = document.querySelector('.td-title');
+  // const value = Number(idElement.textContent);
   if(target.closest('.td-button_delete')) {
       target.closest('.product-card').remove();
       const newData = data.filter((item) => {
-        return item.id !== value
+        // return item.id !== value
+        return item.title !== nameElement.textContent
       })
+      console.log('newData', newData);
       totalSumPage(newData);
     }
   });
