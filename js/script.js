@@ -158,21 +158,21 @@ const totalSumPage = data => {
   totalPriceSpanPage.textContent = `$ ${totalSum}`
 }
 
+
 // Функция удаления продукта из таблцы
 const deleteProduct = () => {
-  let newData;
   tableList.addEventListener('click', e => {
   const target = e.target;
   const idElement = document.querySelector('.td-id');
   const value = Number(idElement.textContent);
   if(target.closest('.td-button_delete')) {
       target.closest('.product-card').remove();
-      newData = data.filter((item) => {
+      const newData = data.filter((item) => {
         return item.id !== value
       })
+      totalSumPage(newData);
     }
   });
-  totalSumPage(data);
 }
 
 // Функция добавления товара в таблицу
@@ -201,6 +201,7 @@ const init = () => {
   deleteProduct();
   calculatePrice();
   formControl();
+  totalSumPage(data);
 }
 
 init();
