@@ -73,7 +73,7 @@ const createRow = obj => {
   }
   
   tr.insertAdjacentHTML('beforeend', `
-      <td class="td-id">${obj.id ? obj.id : randomId}</td>
+      <td class="td-id">${obj.id}</td>
       <td class="td-title">${obj.title}</td>
       <td>${obj.description}</td>
       <td class="td-unit">${obj.units}</td>
