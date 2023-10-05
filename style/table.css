@@ -91,15 +91,15 @@ td {
 	background-image: url('../img/no-image.svg');
 }
 
-.td-button_image {
+.td-button-image {
 	background-image: url('../img/image.svg');
 }
 
-.td-button_edit {
+.td-button-edit {
 	background-image: url('../img/edit.svg');
 }
 
-.td-button_delete {
+.td-button-delete {
 	background-image: url('../img/delete.svg');
 }
 
