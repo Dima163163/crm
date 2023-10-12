@@ -30,7 +30,8 @@ const createRow = (obj, list) => {
       <td class="td-last">
         <div class="td-btn-wrapper">
           <a class="td-button td-button-image"
-          href="${obj.images ? obj.images.small : obj.images}"></a>
+          data-pic="${obj.image}"
+          href=""></a>
           <button class="td-button td-button-edit"></button>
           <button class="td-button td-button-delete"></button>
         </div>

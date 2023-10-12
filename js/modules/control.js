@@ -69,6 +69,7 @@ export const formControl = (data, formSelector,
 
     const formData = new FormData(e.target);
     const newProduct = Object.fromEntries(formData);
+    console.log(newProduct);
     addNewProductPage(newProduct, table, list);
     addProductData(data, newProduct, totalPageSelector);
     formSelector.reset();
@@ -100,6 +101,27 @@ export const deleteProduct = (data, table, totalPageSelector) => {
       target.closest('.product-card').remove();
       newData = data.filter((item) => item.id !== value);
       totalSumPage(newData, totalPageSelector);
+    }
+  });
+};
+
+// Функция открытия изображения товара в новом окне
+export const opensAnImage = (list) => {
+  list.addEventListener('click', e => {
+    e.preventDefault();
+    const target = e.target;
+    if (target.closest('.td-button-image')) {
+      const win = open('about:blank', '', `
+            width=600,
+            height=600,
+            top=${(screen.height - 600) / 2},
+            left=${(screen.width - 600) / 2}
+          `);
+      const dataImg = target.closest('.td-button-image')
+          .getAttribute('data-pic');
+      win.document.body.innerHTML = `
+      <img src='${dataImg}'>
+      `;
     }
   });
 };

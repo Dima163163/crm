@@ -1,7 +1,7 @@
 import elements from './modules/elementsPage.js';
 import {modalControl, addProductPage, totalSumPage,
   activeCheckDiscount, calculatePrice,
-  formControl, deleteProduct} from './modules/control.js';
+  formControl, deleteProduct, opensAnImage} from './modules/control.js';
 import renderGoods from './modules/render.js';
 
 const {
@@ -14,7 +14,8 @@ const {
   totalPriceSpanPage,
   addProduct,
   overlayModal,
-  tableList} = elements;
+  tableList,
+} = elements;
 
 const data = [
   {
@@ -25,10 +26,7 @@ const data = [
     'units': 'шт',
     'discont': 5,
     'count': 5,
-    'images': {
-      'small': 'img/smrtxiaomi11t-m.jpg',
-      'big': 'img/smrtxiaomi11t-b.jpg',
-    },
+    'image': 'https://www.hausdorf.ru/upload/iblock/10c/professionalnaya-kofemashina-wmf-900-s.jpg',
   },
   {
     'id': 937295527,
@@ -38,10 +36,7 @@ const data = [
     'discont': 15,
     'units': 'шт',
     'count': 12,
-    'images': {
-      'small': 'img/smrtxiaomi11t-m.jpg',
-      'big': 'img/smrtxiaomi11t-b.jpg',
-    },
+    'image': 'https://www.hausdorf.ru/upload/iblock/10c/professionalnaya-kofemashina-wmf-900-s.jpg',
   },
 ];
 
@@ -55,6 +50,7 @@ const init = () => {
   calculatePrice(inputPrice, inputCount, totalPriceSpanForm);
   formControl(data, form, totalPriceSpanPage, overlayModal, tableList);
   totalSumPage(data, totalPriceSpanPage);
+  opensAnImage(tableList);
 };
 
 init();
