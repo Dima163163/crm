@@ -6,7 +6,8 @@ const renderGoods = (err, data) => {
     const h2 = document.createElement('h2');
     h2.style.color = 'red';
     h2.textContent = 'Не удалось загрузить товары.';
-    document.querySelector('.table-list').append(h2);
+    document.querySelector('.cms-wrapper__title')
+        .insertAdjacentElement('afterend', h2);
     return;
   }
 

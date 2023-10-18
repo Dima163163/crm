@@ -19,7 +19,7 @@ const {
   tableList,
 } = elements;
 
-const URL = 'https://mica-short-xenoposeidon.glitch.me/api/goods';
+const URL = 'https://mica-short-xenoposeidon.glitch.me/api/goods/54';
 
 
 const init = () => {
