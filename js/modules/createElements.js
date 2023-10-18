@@ -7,6 +7,7 @@ const renderGoods = (err, data) => {
     h2.style.color = 'red';
     h2.textContent = 'Не удалось загрузить товары.';
     document.querySelector('.table-list').append(h2);
+    return;
   }
 
   const goods = data.map(item => {

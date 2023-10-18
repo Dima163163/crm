@@ -76,8 +76,9 @@ export const addProductData = (data, product, totalPageSelector) => {
 //   });
 // };
 
-export const formControl = async (formSelector,
-    totalPageSelector, elemModal, fetchRequest, url, renderGoods) => {
+export const formControl = (formSelector,
+    totalPageSelector, elemModal, fetchRequest,
+    url, renderGoods, tableList) => {
   formSelector.addEventListener('submit', e => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -85,19 +86,20 @@ export const formControl = async (formSelector,
     fetchRequest(url, {
       method: 'POST',
       body: newProduct,
-      callback(err, data) {
-        console.log(data);
+      callback(err) {
+        if (err) {
+          document.querySelector('.modal-error').classList.add('is-visible');
+          return;
+        }
+        tableList.textContent = '';
+        fetchRequest(url, {callback: renderGoods});
+        formSelector.reset();
+        openCloseModal(elemModal);
       },
       headers: {
         'Content-Type': 'application/json',
       },
     });
-    // const formData = new FormData(e.target);
-    // const newProduct = Object.fromEntries(formData);
-    // console.log(newProduct);
-
-    // formSelector.reset();
-    // openCloseModal(elemModal);
   });
 };
 

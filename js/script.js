@@ -21,29 +21,6 @@ const {
 
 const URL = 'https://mica-short-xenoposeidon.glitch.me/api/goods';
 
-// const data = [
-//   {
-//     'id': 246016548,
-//     'title': 'Навигационная система Soundmax',
-//     'description': 'Техника для дома',
-//     'price': 100,
-//     'units': 'шт',
-//     'discont': 5,
-//     'count': 5,
-//     'image': 'https://www.hausdorf.ru/upload/iblock/10c/professionalnaya-kofemashina-wmf-900-s.jpg',
-//   },
-//   {
-//     'id': 937295527,
-//     'title': 'Настольная игра “На 4-х ногах”',
-//     'description': 'Настольные игры',
-//     'price': 1,
-//     'discont': 15,
-//     'units': 'шт',
-//     'count': 12,
-//     'image': 'https://www.hausdorf.ru/upload/iblock/10c/professionalnaya-kofemashina-wmf-900-s.jpg',
-//   },
-// ];
-
 
 const init = () => {
   fetchRequest(URL, {callback: renderGoods});
@@ -54,7 +31,7 @@ const init = () => {
   // deleteProduct(data, tableList, totalPriceSpanPage);
   // calculatePrice(inputPrice, inputCount, totalPriceSpanForm);
   formControl(form, totalPriceSpanPage, overlayModal,
-      fetchRequest, URL, renderGoods);
+      fetchRequest, URL, renderGoods, tableList);
   // formControl(data, form, totalPriceSpanPage, overlayModal, tableList,
   //     sendGoods);
   // totalSumPage(data, totalPriceSpanPage);
