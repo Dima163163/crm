@@ -1,43 +1,47 @@
 
-
 // Функция создания строки с товаром
-const createRow = (obj, list) => {
-  const tr = document.createElement('tr');
-  tr.classList.add('product-card');
-
-  const randomId = Math.round(Math.random() * 1000000000);
-  if (!obj.id) {
-    obj.id = randomId;
+const renderGoods = (err, data) => {
+  console.log('data: ', data);
+  if (err) {
+    const h2 = document.createElement('h2');
+    h2.style.color = 'red';
+    h2.textContent = 'Не удалось загрузить товары.';
+    document.querySelector('.table-list').append(h2);
   }
 
-  let totalSum;
-  if (obj.discont) {
-    totalSum = Math.ceil(obj.price * obj.count -
-    (obj.price * obj.count * (obj.discont / 100)));
-  } else {
-    totalSum = obj.price * obj.count;
-  }
+  const goods = data.map(item => {
+    const tr = document.createElement('tr');
+    tr.classList.add('product-card');
 
-  tr.insertAdjacentHTML('beforeend', `
-      <td class="td-id">${obj.id}</td>
-      <td class="td-title">${obj.title}</td>
-      <td>${obj.description}</td>
-      <td class="td-unit">${obj.units}</td>
-      <td class="td-sum">${+obj.count}</td>
-      <td class="td-disc">${obj.discont ? obj.discont : 'false'}</td>
-      <td>${+obj.price}</td>
-      <td>${totalSum}</td>
-      <td class="td-last">
-        <div class="td-btn-wrapper">
-          <a class="td-button td-button-image"
-          data-pic="${obj.image}"
-          href=""></a>
-          <button class="td-button td-button-edit"></button>
-          <button class="td-button td-button-delete"></button>
-        </div>
-      </td>
-  `);
-  list.append(tr);
-  return tr;
+    let totalSum;
+    if (item.discount) {
+      totalSum = Math.ceil(item.price * item.count -
+      (item.price * item.count * (item.discount / 100)));
+    } else {
+      totalSum = item.price * item.count;
+    }
+
+    tr.insertAdjacentHTML('beforeend', `
+        <td class="td-id">${item.id}</td>
+        <td class="td-title">${item.title}</td>
+        <td>${item.category}</td>
+        <td class="td-unit">${item.units}</td>
+        <td class="td-sum">${+item.count}</td>
+        <td class="td-disc">${item.discount}</td>
+        <td>${+item.price}</td>
+        <td>${totalSum}</td>
+        <td class="td-last">
+          <div class="td-btn-wrapper">
+            <a class="td-button td-button-image"
+            data-pic="${item.image}"
+            href=""></a>
+            <button class="td-button td-button-edit"></button>
+            <button class="td-button td-button-delete"></button>
+          </div>
+        </td>
+    `);
+    return tr;
+  });
+  document.querySelector('.table-list').append(...goods);
 };
-export default createRow;
+export default renderGoods;

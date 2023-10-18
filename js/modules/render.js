@@ -1,10 +1,10 @@
-import createRow from './createElements.js';
+// import createRow from './createElements.js';
 
 // Функция перебора массива с объектами для создания строк
-const renderGoods = (arr, list) => {
-  const arrGoods = arr.map(item => createRow(item, list));
+// const renderGoods = (err, arr) => {
+//   const arrGoods = arr.map(item => createRow(err, item));
 
-  return arrGoods;
-};
+//   return arrGoods;
+// };
 
-export default renderGoods;
+// export default renderGoods;

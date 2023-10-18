@@ -57,23 +57,47 @@ export const activeCheckDiscount = (form, checkbox, checkboxInput) => {
 
 // Функция добавления продукта в data
 export const addProductData = (data, product, totalPageSelector) => {
-  data.push(product);
+  // data.push(product);
   totalSumPage(data, totalPageSelector);
 };
 
 // Функция добавления продукта из модального окна
-export const formControl = (data, formSelector,
-    totalPageSelector, elemModal, table, list) => {
+// export const formControl = (data, formSelector,
+//     totalPageSelector, elemModal, list) => {
+//   formSelector.addEventListener('submit', e => {
+//     e.preventDefault();
+//     const formData = new FormData(e.target);
+//     const newProduct = Object.fromEntries(formData);
+//     console.log(newProduct);
+//     addNewProductPage(newProduct, list);
+//     addProductData(data, newProduct, totalPageSelector);
+//     formSelector.reset();
+//     openCloseModal(elemModal);
+//   });
+// };
+
+export const formControl = async (formSelector,
+    totalPageSelector, elemModal, fetchRequest, url, renderGoods) => {
   formSelector.addEventListener('submit', e => {
     e.preventDefault();
-
     const formData = new FormData(e.target);
     const newProduct = Object.fromEntries(formData);
-    console.log(newProduct);
-    addNewProductPage(newProduct, table, list);
-    addProductData(data, newProduct, totalPageSelector);
-    formSelector.reset();
-    openCloseModal(elemModal);
+    fetchRequest(url, {
+      method: 'POST',
+      body: newProduct,
+      callback(err, data) {
+        console.log(data);
+      },
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    // const formData = new FormData(e.target);
+    // const newProduct = Object.fromEntries(formData);
+    // console.log(newProduct);
+
+    // formSelector.reset();
+    // openCloseModal(elemModal);
   });
 };
 
