@@ -1,4 +1,4 @@
-
+// Получение данных с сервера и отправка дананных на сервер
 export const fetchRequest = async (url, {
   method = 'GET',
   callback,
