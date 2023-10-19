@@ -1,4 +1,3 @@
-import createRow from './createElements.js';
 import elements from './elementsPage.js';
 const {inputPrice, inputCount} = elements;
 
@@ -25,22 +24,31 @@ export const addProductPage = (addProductSelector, elemModal) => {
 };
 
 // Функция добавления товара в таблицу
-export const addNewProductPage = (product, list) => {
-  list.append(createRow(product, list));
-};
-// Функция высчитывания общей стоимости в таблице
-export const totalSumPage = (data, totalPageSelector) => {
-  let totalSum = 0;
-  data.forEach((product) => {
-    if (product.discont) {
-      totalSum += Math.ceil(product.price * product.count -
-      (product.price * product.count * (product.discont / 100)));
-    } else {
-      totalSum += product.price * product.count;
-    }
-  });
+// export const addNewProductPage = (product, list) => {
+//   list.append(createRow(product, list));
+// };
 
-  totalPageSelector.textContent = `$ ${totalSum}`;
+// Функция высчитывания общей стоимости в таблице
+export const totalSumPage = (totalPageSelector, fetchRequest, url) => {
+  fetchRequest(url, {
+    method: 'GET',
+    callback(err, data) {
+      if (err) {
+        totalPageSelector.textContent = `Произошла ошибка`;
+        return;
+      }
+      let totalSum = 0;
+      data.forEach((product) => {
+        if (product.discont) {
+          totalSum += Math.ceil(product.price * product.count -
+          (product.price * product.count * (product.discont / 100)));
+        } else {
+          totalSum += product.price * product.count;
+        }
+        totalPageSelector.textContent = `$ ${totalSum}`;
+      });
+    },
+  });
 };
 
 // Функция активации input со скидкой
@@ -55,27 +63,7 @@ export const activeCheckDiscount = (form, checkbox, checkboxInput) => {
   });
 };
 
-// Функция добавления продукта в data
-export const addProductData = (data, product, totalPageSelector) => {
-  // data.push(product);
-  totalSumPage(data, totalPageSelector);
-};
-
 // Функция добавления продукта из модального окна
-// export const formControl = (data, formSelector,
-//     totalPageSelector, elemModal, list) => {
-//   formSelector.addEventListener('submit', e => {
-//     e.preventDefault();
-//     const formData = new FormData(e.target);
-//     const newProduct = Object.fromEntries(formData);
-//     console.log(newProduct);
-//     addNewProductPage(newProduct, list);
-//     addProductData(data, newProduct, totalPageSelector);
-//     formSelector.reset();
-//     openCloseModal(elemModal);
-//   });
-// };
-
 export const formControl = (formSelector,
     totalPageSelector, elemModal, fetchRequest,
     url, renderGoods, tableList) => {
@@ -95,6 +83,7 @@ export const formControl = (formSelector,
         fetchRequest(url, {callback: renderGoods});
         formSelector.reset();
         openCloseModal(elemModal);
+        totalSumPage(totalPageSelector, fetchRequest, url);
       },
       headers: {
         'Content-Type': 'application/json',
