@@ -2,26 +2,26 @@ import elements from './elementsPage.js';
 const {inputPrice, inputCount} = elements;
 
 // Функция открытия модального окна и закрытия
-export const openCloseModal = (elemModal) => {
-  elemModal.classList.toggle('is-visible');
-};
+// export const openCloseModal = (elemModal) => {
+//   elemModal.classList.toggle('is-visible');
+// };
 
 // Функция вызова закрытия модального окна
-export const modalControl = (elemModal) => {
-  elemModal.addEventListener('click', e => {
-    const target = e.target;
-    if (target === elemModal || target.closest('.modal-close')) {
-      openCloseModal(elemModal);
-    }
-  });
-};
+// export const modalControl = (elemModal) => {
+//   elemModal.addEventListener('click', e => {
+//     const target = e.target;
+//     if (target === elemModal || target.closest('.modal-close')) {
+//       openCloseModal(elemModal);
+//     }
+//   });
+// };
 
 // Функция вызова модального окна
-export const addProductPage = (addProductSelector, elemModal) => {
-  addProductSelector.addEventListener('click', () => {
-    openCloseModal(elemModal);
-  });
-};
+// export const addProductPage = (addProductSelector, elemModal) => {
+//   addProductSelector.addEventListener('click', () => {
+//     openCloseModal(elemModal);
+//   });
+// };
 
 // Функция добавления товара в таблицу
 // export const addNewProductPage = (product, list) => {
@@ -52,58 +52,62 @@ export const totalSumPage = (totalPageSelector, fetchRequest, url) => {
 };
 
 // Функция активации input со скидкой
-export const activeCheckDiscount = (form, checkbox, checkboxInput) => {
-  form.addEventListener('change', () => {
-    if (checkbox.checked) {
-      checkboxInput.disabled = false;
-    } else {
-      checkboxInput.value = '';
-      checkboxInput.disabled = true;
-    }
-  });
-};
+// export const activeCheckDiscount = (form, checkbox, checkboxInput) => {
+//   form.addEventListener('change', () => {
+//     if (checkbox.checked) {
+//       checkboxInput.disabled = false;
+//     } else {
+//       checkboxInput.value = '';
+//       checkboxInput.disabled = true;
+//     }
+//   });
+// };
 
 // Функция добавления продукта из модального окна
-export const formControl = (formSelector,
-    totalPageSelector, elemModal, fetchRequest,
-    url, renderGoods, tableList) => {
-  formSelector.addEventListener('submit', e => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const newProduct = Object.fromEntries(formData);
-    fetchRequest(url, {
-      method: 'POST',
-      body: newProduct,
-      callback(err) {
-        if (err) {
-          document.querySelector('.modal-error').classList.add('is-visible');
-          return;
-        }
-        tableList.textContent = '';
-        fetchRequest(url, {callback: renderGoods});
-        formSelector.reset();
-        openCloseModal(elemModal);
-        totalSumPage(totalPageSelector, fetchRequest, url);
-      },
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-  });
-};
+// export const formControl = (formSelector,
+//     totalPageSelector, elemModal, fetchRequest,
+//     url, renderGoods, tableList) => {
+//   document.querySelector('.form').addEventListener('submit', e => {
+//     e.preventDefault();
+//     const formData = new FormData(e.target);
+//     const newProduct = Object.fromEntries(formData);
+//     console.log('newProduct: ', newProduct);
+
+//     fetchRequest(url, {
+//       method: 'POST',
+//       body: newProduct,
+//       callback(err) {
+//         if (err) {
+//           document.querySelector('.modal-error').classList.add('is-visible');
+//           return;
+//         }
+//         tableList.textContent = '';
+//         fetchRequest(url, {callback: renderGoods});
+//         // formSelector.reset();
+//         // openCloseModal(elemModal);
+//         document.querySelector('.form').reset();
+//         document.querySelector('.overlay').remove();
+//         totalSumPage(totalPageSelector, fetchRequest, url);
+//       },
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//     });
+//   });
+// };
 
 // Функция высчитывания итоговой цены товара
-export const calculatePrice = (inputPriceSelector,
-    inputCoutSelector, totalPriceSelector) => {
-  inputPriceSelector.addEventListener('blur', () => {
-    const sum = +inputPriceSelector.value * +inputCoutSelector.value;
-    totalPriceSelector.textContent = `$ ${sum}`;
-  });
-  inputCoutSelector.addEventListener('blur', () => {
-    const sum = +inputPrice.value * +inputCount.value;
-    totalPriceSelector.textContent = `$ ${sum}`;
-  });
-};
+// export const calculatePrice = (inputPriceSelector,
+//     inputCoutSelector, totalPriceSelector) => {
+//   inputPriceSelector.addEventListener('blur', () => {
+//     const sum = +inputPriceSelector.value * +inputCoutSelector.value;
+//     totalPriceSelector.textContent = `$ ${sum}`;
+//   });
+//   inputCoutSelector.addEventListener('blur', () => {
+//     const sum = +inputPrice.value * +inputCount.value;
+//     totalPriceSelector.textContent = `$ ${sum}`;
+//   });
+// };
 
 // Функция удаления продукта из таблцы
 export const deleteProduct = (data, table, totalPageSelector) => {

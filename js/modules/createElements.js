@@ -1,7 +1,9 @@
+import {fetchRequest} from './loadSendGoods.js';
+import {showModal} from './modal.js';
+import {URL} from '../script.js';
 
 // Функция создания строки с товаром
 const renderGoods = (err, data) => {
-  console.log('data: ', data);
   if (err) {
     const h2 = document.createElement('h2');
     h2.style.color = 'red';
@@ -11,7 +13,7 @@ const renderGoods = (err, data) => {
     return;
   }
 
-  const goods = data.map(item => {
+  const goods = data.goods.map(item => {
     const tr = document.createElement('tr');
     tr.classList.add('product-card');
 
@@ -37,13 +39,33 @@ const renderGoods = (err, data) => {
             <a class="td-button td-button-image"
             data-pic="${item.image}"
             href=""></a>
-            <button class="td-button td-button-edit"></button>
+            <button class="td-button td-button-edit" data-id="${item.id}">
+            </button>
             <button class="td-button td-button-delete"></button>
           </div>
         </td>
     `);
+
     return tr;
   });
+
   document.querySelector('.table-list').append(...goods);
+
+  return new Promise(resolve => {
+    document.querySelector('.cms-wrapper__table').addEventListener('click',
+        async ({target}) => {
+          if (target.classList.contains('td-button-edit')) {
+            const checkGoods =
+            await fetchRequest(`${URL}/${target.dataset.id}`, {
+              callback: showModal,
+            });
+            console.log(checkGoods);
+          }
+          if (target.classList.contains('cms-btn')) {
+            showModal();
+          }
+        });
+  });
 };
+
 export default renderGoods;

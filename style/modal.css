@@ -24,7 +24,7 @@
 }
 
 .modal {
-	display: none;
+	display: flex;
 	position: absolute;
 	left: 50%;
 	top: 50%;
@@ -34,10 +34,6 @@
 	width: 100%;
 	min-height: 613px;
 	z-index: 2;
-}
-
-.modal.modal-open {
-	display: flex;
 }
 
 .modal__wrapper {

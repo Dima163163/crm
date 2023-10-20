@@ -18,13 +18,11 @@ export const fetchRequest = async (url, {
 
     if (response.ok) {
       const data = await response.json();
-      const dataGoods = data.goods;
-      if (callback) callback(null, dataGoods);
+      if (callback) return callback(null, data);
       return;
     }
-    console.log(response.status);
-    throw new Error(response.status);
+    throw new Error(`Ошибка ${response.status}: ${response.statusText}`);
   } catch (err) {
-    callback(err);
+    return callback(err);
   }
 };
