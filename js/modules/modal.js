@@ -54,7 +54,7 @@ export const showModal = async (err, data) => {
 
 
   const labelName = document.createElement('label');
-  labelName.for = 'name';
+  labelName.setAttribute('for', 'name');
   labelName.classList.add('crm-wrapper__title', 'crm__name-title');
   labelName.textContent = 'Наименование';
 
@@ -91,7 +91,7 @@ export const showModal = async (err, data) => {
   fieldsetCrm.append(fieldsetCrmCategory);
 
   const labelCategory = document.createElement('label');
-  labelCategory.for = 'category';
+  labelCategory.setAttribute('for', 'category');
   labelCategory.classList.add('crm-wrapper__title', 'crm__category-title');
   labelCategory.textContent = 'Категория';
 
@@ -110,7 +110,7 @@ export const showModal = async (err, data) => {
   fieldsetCrm.append(fieldsetCrmUnits);
 
   const labelUnits = document.createElement('label');
-  labelUnits.for = 'units';
+  labelUnits.setAttribute('for', 'units');
   labelUnits.classList.add('crm-wrapper__title', 'crm__units-title');
   labelUnits.textContent = 'Еденицы измерения';
 
@@ -129,7 +129,7 @@ export const showModal = async (err, data) => {
   fieldsetCrm.append(fieldsetCrmDiscount);
 
   const labelDiscount = document.createElement('label');
-  labelDiscount.for = 'discont';
+  labelDiscount.setAttribute('for', 'discont');
   labelDiscount.classList.add('crm-wrapper__title', 'crm__discont-title');
   labelDiscount.textContent = 'Дисконт';
   fieldsetCrmDiscount.append(labelDiscount);
@@ -145,15 +145,15 @@ export const showModal = async (err, data) => {
   inputDiscountChecbox.classList.add('crm__checkbox-input');
 
   const labelDiscountInner = document.createElement('label');
-  labelDiscountInner.for = 'discont-checkbox';
+  labelDiscountInner.setAttribute('for', 'discont-checkbox');
   labelDiscountInner.classList.add('crm__checkbox');
 
   const inputDiscountInner = document.createElement('input');
   inputDiscountInner.type = 'number';
   inputDiscountInner.name = 'discount';
   inputDiscountInner.id = 'discont-inpit';
-  inputDiscountInner.disabled = true;
   inputDiscountInner.classList.add('crm-wrapper__input', 'crm__discont-input');
+  inputDiscountInner.disabled = true;
   inputDiscountInner.value = `${data ? data.discount : ''}`;
   fieldsetCrmDiscountInner.append(inputDiscountChecbox, labelDiscountInner,
       inputDiscountInner);
@@ -165,7 +165,7 @@ export const showModal = async (err, data) => {
   fieldsetCrm.append(fieldsetCrmCount);
 
   const labelCount = document.createElement('label');
-  labelCount.for = 'count';
+  labelCount.setAttribute('for', 'count');
   labelCount.classList.add('crm-wrapper__title', 'crm__count-title');
   labelCount.textContent = 'Количество';
 
@@ -185,7 +185,7 @@ export const showModal = async (err, data) => {
   fieldsetCrm.append(fieldsetCrmPrice);
 
   const labelPrice = document.createElement('label');
-  labelPrice.for = 'price';
+  labelPrice.setAttribute('for', 'price');
   labelPrice.classList.add('crm-wrapper__title', 'crm__price-title');
   labelPrice.textContent = 'Цена';
 
@@ -205,7 +205,7 @@ export const showModal = async (err, data) => {
   fieldsetCrm.append(fieldsetCrmImage);
 
   const labelImage = document.createElement('label');
-  labelImage.for = 'image';
+  labelImage.setAttribute('for', 'image');
   labelImage.classList.add('crm-image-button');
   labelImage.textContent = 'Добавить изображение';
 
@@ -233,7 +233,7 @@ export const showModal = async (err, data) => {
   const btn = document.createElement('button');
   btn.classList.add('btn');
   btn.type = 'submit';
-  btn.dataset.form = 'example';
+  btn.setAttribute('form', 'example');
   btn.textContent = 'Добавить товар';
 
   bottomWrapper.append(p, btn);
@@ -259,6 +259,7 @@ export const showModal = async (err, data) => {
     if (document.querySelector('.crm__checkbox-input').checked) {
       document.querySelector('.crm__discont-input').disabled = false;
     } else {
+      document.querySelector('.crm__checkbox-input').checked = false;
       document.querySelector('.crm__discont-input').value = '';
       document.querySelector('.crm__discont-input').disabled = true;
     }
@@ -284,7 +285,7 @@ export const showModal = async (err, data) => {
     document.querySelector('.total-cost-form__span').textContent = `$ ${sum}`;
   });
   // Отправка данных из формы
-  document.querySelector('.form').addEventListener('submit', e => {
+  form.addEventListener('submit', e => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const newProduct = Object.fromEntries(formData);

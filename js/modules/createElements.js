@@ -12,7 +12,7 @@ const renderGoods = (err, data) => {
         .insertAdjacentElement('afterend', h2);
     return;
   }
-
+  document.querySelector('.table-list').textContent = '';
   const goods = data.goods.map(item => {
     const tr = document.createElement('tr');
     tr.classList.add('product-card');
@@ -63,6 +63,16 @@ const renderGoods = (err, data) => {
           }
           if (target.classList.contains('cms-btn')) {
             showModal();
+          }
+          if (target.classList.contains('td-button-delete')) {
+            const id = target.closest('.product-card')
+                .querySelector('.td-id').textContent;
+            await fetchRequest(`${URL}/${id}`, {
+              method: 'DELETE',
+              callback: () => {
+              },
+            });
+            fetchRequest(URL, {callback: renderGoods});
           }
         });
   });
