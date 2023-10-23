@@ -1,9 +1,10 @@
 import {fetchRequest} from './loadSendGoods.js';
 import {showModal} from './modal.js';
-import {URL} from '../script.js';
+import {URL as url} from '../script.js';
 
 // Функция создания строки с товаром
 const renderGoods = (err, data) => {
+  console.log(data)
   if (err) {
     const h2 = document.createElement('h2');
     h2.style.color = 'red';
@@ -56,7 +57,7 @@ const renderGoods = (err, data) => {
         async ({target}) => {
           if (target.classList.contains('td-button-edit')) {
             const checkGoods =
-            await fetchRequest(`${URL}/${target.dataset.id}`, {
+            await fetchRequest(`${url}/${target.dataset.id}`, {
               callback: showModal,
             });
             console.log(checkGoods);
@@ -67,12 +68,12 @@ const renderGoods = (err, data) => {
           if (target.classList.contains('td-button-delete')) {
             const id = target.closest('.product-card')
                 .querySelector('.td-id').textContent;
-            await fetchRequest(`${URL}/${id}`, {
+            await fetchRequest(`${url}/${id}`, {
               method: 'DELETE',
               callback: () => {
               },
             });
-            fetchRequest(URL, {callback: renderGoods});
+            fetchRequest(url, {callback: renderGoods});
           }
         });
   });

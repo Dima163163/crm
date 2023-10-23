@@ -24,9 +24,11 @@ export const URL = 'https://mica-short-xenoposeidon.glitch.me/api/goods';
 
 
 const init = async () => {
-  await fetchRequest(URL, {callback: renderGoods});
-
-  totalSumPage(totalPriceSpanPage, fetchRequest, URL);
+  await fetchRequest(URL, {callback: (err, data) => {
+    renderGoods(err, data);
+    totalSumPage(totalPriceSpanPage, fetchRequest, URL);
+  },
+  });
   // await activeCheckDiscount(form, checkbox, checkboxInput);
   // await modalControl(overlayModal);
   // addProductPage(addProduct, overlayModal);

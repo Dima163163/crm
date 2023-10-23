@@ -1,5 +1,3 @@
-import elements from './elementsPage.js';
-const {inputPrice, inputCount} = elements;
 
 // Функция открытия модального окна и закрытия
 // export const openCloseModal = (elemModal) => {
@@ -38,13 +36,14 @@ export const totalSumPage = (totalPageSelector, fetchRequest, url) => {
         return;
       }
       let totalSum = 0;
-      data.forEach((product) => {
+      data.goods.forEach((product) => {
         if (product.discont) {
           totalSum += Math.ceil(product.price * product.count -
           (product.price * product.count * (product.discont / 100)));
         } else {
           totalSum += product.price * product.count;
         }
+        console.log('totalSum: ', totalSum);
         totalPageSelector.textContent = `$ ${totalSum}`;
       });
     },
