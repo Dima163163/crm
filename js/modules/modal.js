@@ -1,13 +1,12 @@
 import {fetchRequest} from './loadSendGoods.js';
 import {loadStyle} from './loadStyle.js';
-import {URL} from '../script.js';
+import {URL as url} from '../script.js';
 import renderGoods from './createElements.js';
 import {totalSumPage} from './control.js';
 
 export const showModal = async (err, data) => {
   await loadStyle('style/modal.css');
 
-  console.log('data', data);
   const overlay = document.createElement('div');
   overlay.classList.add('overlay', 'is-visible');
 
@@ -31,7 +30,7 @@ export const showModal = async (err, data) => {
 
   const h2 = document.createElement('h2');
   h2.classList.add('modal__title');
-  h2.textContent = 'Добавить товар';
+  h2.textContent = `${data ? 'Изменить товар' : 'Добавить товар'}`;
   modalTitleWrapper.append(h2);
   modalWrapper.append(modalTitleWrapper);
 
@@ -213,10 +212,20 @@ export const showModal = async (err, data) => {
   inputImage.type = 'file';
   inputImage.name = 'image';
   inputImage.id = 'image';
+  inputImage.accept = 'image/*';
   inputImage.classList.add('crm-wrapper__input', 'crm-image__input');
 
   fieldsetCrmImage.append(labelImage, inputImage);
   fieldsetCrmData.append(fieldsetCrmImage);
+
+  const divImg = document.createElement('div');
+  divImg.classList.add('crm-product-wrapper');
+
+  const imgCard = document.createElement('img');
+  imgCard.classList.add('crm-product-card');
+
+  divImg.append(imgCard);
+  form.append(divImg);
 
   const bottomWrapper = document.createElement('div');
   bottomWrapper.classList.add('modal-bottom-wrapper');
@@ -254,6 +263,40 @@ export const showModal = async (err, data) => {
 
   document.querySelector('body').append(overlay);
 
+  // Приведение файла изображения в Base64 формат
+  const formationToBase64 = file => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+
+    reader.addEventListener('loadend', () => {
+      resolve(reader.result);
+    });
+
+    reader.addEventListener('error', err => {
+      reject(err);
+    });
+
+    reader.readAsDataURL(file);
+  });
+
+  // Добавление файла изображения в модальное окно
+  inputImage.addEventListener('change', async () => {
+    if (inputImage.files.length > 0) {
+      if (inputImage.files.size <= 1000000) {
+        const src = URL.createObjectURL(inputImage.files[0]);
+        imgCard.src = src;
+        imgCard.style.display = 'block';
+      } else {
+        const fieldsetWarning = document.createElement('fieldset');
+        fieldsetWarning.classList.add('crm-wrapper', 'crm-warning');
+        const pWarning = document.createElement('p');
+        pWarning.classList.add('crm-warning__text');
+        pWarning.textContent = 'Изображение не должно превышать размер 1 Мб';
+        fieldsetWarning.append(pWarning);
+        fieldsetCrm.after(fieldsetWarning);
+      }
+    }
+  });
+
   // Активация input discount
   document.querySelector('.form').addEventListener('change', () => {
     if (document.querySelector('.crm__checkbox-input').checked) {
@@ -274,24 +317,24 @@ export const showModal = async (err, data) => {
     }
   });
   // Высчитывание цены товара в модальном окне
-  document.querySelector('.crm__price-input').addEventListener('blur', () => {
+  inputPrice.addEventListener('blur', () => {
     const sum = +document.querySelector('.crm__price-input')
         .value * +document.querySelector('.crm__count-input').value;
     document.querySelector('.total-cost-form__span').textContent = `$ ${sum}`;
   });
-  document.querySelector('.crm__count-input').addEventListener('blur', () => {
-    const sum = +document.querySelector('.crm__price-input')
-        .value * +document.querySelector('.crm__count-input').value;
-    document.querySelector('.total-cost-form__span').textContent = `$ ${sum}`;
+  inputCount.addEventListener('blur', () => {
+    const sum = +inputPrice
+        .value * +inputCount.value;
+    span.textContent = `$ ${sum}`;
   });
   // Отправка данных из формы
-  form.addEventListener('submit', e => {
+  form.addEventListener('submit', async e => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const newProduct = Object.fromEntries(formData);
-    console.log('newProduct: ', newProduct);
+    newProduct.image = await formationToBase64(newProduct.image);
 
-    fetchRequest(URL, {
+    fetchRequest(url, {
       method: 'POST',
       body: newProduct,
       callback(err) {
@@ -300,11 +343,11 @@ export const showModal = async (err, data) => {
           return;
         }
         document.querySelector('.table-list').textContent = '';
-        fetchRequest(URL, {callback: renderGoods});
+        fetchRequest(url, {callback: renderGoods});
         document.querySelector('.form').reset();
         document.querySelector('.overlay').remove();
-        totalSumPage(document.querySelector('.total-cost__span'),
-            fetchRequest, URL);
+        totalSumPage(span,
+            fetchRequest, url);
       },
       headers: {
         'Content-Type': 'application/json',

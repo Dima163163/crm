@@ -226,11 +226,11 @@
 
 .crm-product-card {
 	background-size: cover;
-	display: flex;
+	display: none;
 	justify-content: center;
 	align-items: center;
 	margin: 0 auto;
-	background-image: url('../img/cofe-automat.png');
+	/* background-image: url('../img/cofe-automat.png'); */
 	background-repeat: no-repeat;
 	width: 200px;
 	height: 200px;
