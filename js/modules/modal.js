@@ -34,6 +34,17 @@ export const showModal = async (err, data) => {
   modalTitleWrapper.append(h2);
   modalWrapper.append(modalTitleWrapper);
 
+  if (data) {
+    const pId = document.createElement('p');
+    pId.classList.add('modal__id');
+    pId.textContent = 'id ';
+    const spanId = document.createElement('span');
+    spanId.classList.add('modal__id-number');
+    spanId.textContent = data.id;
+    pId.append(spanId);
+    modalTitleWrapper.append(pId);
+  }
+
   const form = document.createElement('form');
   form.id = 'example';
   form.classList.add('form');
@@ -289,7 +300,6 @@ export const showModal = async (err, data) => {
   // Добавление файла изображения в модальное окно
   inputImage.addEventListener('change', async () => {
     if (inputImage.files.length > 0) {
-      console.log(inputImage.files[0].size)
       if (inputImage.files[0].size <= 1000000) {
         const src = URL.createObjectURL(inputImage.files[0]);
         imgCard.src = src;
