@@ -220,6 +220,10 @@
 	text-transform: uppercase;
 }
 
+.crm-warning {
+	display: none;
+}
+
 .crm-product-wrapper {
 	padding-top: 30px;
 }

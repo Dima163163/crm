@@ -199,6 +199,14 @@ export const showModal = async (err, data) => {
 
   fieldsetCrmPrice.append(labelPrice, inputPrice);
 
+  const fieldsetWarning = document.createElement('fieldset');
+  fieldsetWarning.classList.add('crm-wrapper', 'crm-warning');
+  const pWarning = document.createElement('p');
+  pWarning.classList.add('crm-warning__text');
+  pWarning.textContent = 'Изображение не должно превышать размер 1 Мб';
+  fieldsetWarning.append(pWarning);
+  fieldsetCrm.after(fieldsetWarning);
+
   const fieldsetCrmImage = document.createElement('fieldset');
   fieldsetCrmImage.classList.add('crm-wrapper', 'crm-image');
   fieldsetCrm.append(fieldsetCrmImage);
@@ -280,19 +288,17 @@ export const showModal = async (err, data) => {
 
   // Добавление файла изображения в модальное окно
   inputImage.addEventListener('change', async () => {
-    if (inputImage.files[0].length > 0) {
-      if (inputImage.files.size <= 1000000) {
+    if (inputImage.files.length > 0) {
+      console.log(inputImage.files[0].size)
+      if (inputImage.files[0].size <= 1000000) {
         const src = URL.createObjectURL(inputImage.files[0]);
         imgCard.src = src;
         imgCard.style.display = 'block';
+        if (fieldsetWarning.style.display === 'block') {
+          fieldsetWarning.style = 'display: none';
+        }
       } else {
-        const fieldsetWarning = document.createElement('fieldset');
-        fieldsetWarning.classList.add('crm-wrapper', 'crm-warning');
-        const pWarning = document.createElement('p');
-        pWarning.classList.add('crm-warning__text');
-        pWarning.textContent = 'Изображение не должно превышать размер 1 Мб';
-        fieldsetWarning.append(pWarning);
-        fieldsetCrm.after(fieldsetWarning);
+        fieldsetWarning.style = 'display: block';
       }
     }
   });
