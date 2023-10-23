@@ -280,7 +280,7 @@ export const showModal = async (err, data) => {
 
   // Добавление файла изображения в модальное окно
   inputImage.addEventListener('change', async () => {
-    if (inputImage.files.length > 0) {
+    if (inputImage.files[0].length > 0) {
       if (inputImage.files.size <= 1000000) {
         const src = URL.createObjectURL(inputImage.files[0]);
         imgCard.src = src;
