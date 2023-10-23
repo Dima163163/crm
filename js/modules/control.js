@@ -43,7 +43,6 @@ export const totalSumPage = (totalPageSelector, fetchRequest, url) => {
         } else {
           totalSum += product.price * product.count;
         }
-        console.log('totalSum: ', totalSum);
         totalPageSelector.textContent = `$ ${totalSum}`;
       });
     },

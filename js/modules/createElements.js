@@ -71,9 +71,9 @@ const renderGoods = (err, data) => {
             await fetchRequest(`${url}/${id}`, {
               method: 'DELETE',
               callback: () => {
+                fetchRequest(url, {callback: renderGoods});
               },
             });
-            fetchRequest(url, {callback: renderGoods});
           }
         });
   });
