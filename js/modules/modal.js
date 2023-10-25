@@ -71,7 +71,8 @@ export const showModal = async (err, data) => {
   const inputName = document.createElement('input');
   inputName.type = 'text';
   inputName.name = 'title';
-  inputName.classList.add('crm-wrapper__input', 'crm__name-input');
+  inputName.classList.add('crm-wrapper__input',
+      'crm__name-input', 'elem-form-validate');
   inputName.value = `${data ? data.title : ''}`;
 
   fieldsetCrmName.append(labelName, inputName);
@@ -89,9 +90,9 @@ export const showModal = async (err, data) => {
   const textareaDescription = document.createElement('textarea');
   textareaDescription.name = 'description';
   textareaDescription.id = 'description';
-  textareaDescription.required = true;
+  // textareaDescription.required = true;
   textareaDescription.classList.add('crm-wrapper__textarea',
-      'crm__descpiption-textarea');
+      'crm__descpiption-textarea', 'elem-form-validate-text');
   textareaDescription.value = `${data ? data.description : ''}`;
 
   fieldsetCrmDescription.append(labelDescription, textareaDescription);
@@ -109,8 +110,9 @@ export const showModal = async (err, data) => {
   inputCategory.type = 'text';
   inputCategory.name = 'category';
   inputCategory.id = 'category';
-  inputCategory.required = true;
-  inputCategory.classList.add('crm-wrapper__input', 'crm__category-input');
+  // inputCategory.required = true;
+  inputCategory.classList.add('crm-wrapper__input',
+      'crm__category-input', 'elem-form-validate');
   inputCategory.value = `${data ? data.category : ''}`;
 
   fieldsetCrmCategory.append(labelCategory, inputCategory);
@@ -128,8 +130,9 @@ export const showModal = async (err, data) => {
   inputUnits.type = 'text';
   inputUnits.name = 'units';
   inputUnits.id = 'units';
-  inputUnits.required = true;
-  inputUnits.classList.add('crm-wrapper__input', 'crm__units-input');
+  // inputUnits.required = true;
+  inputUnits.classList.add('crm-wrapper__input',
+      'crm__units-input', 'elem-form-validate');
   inputUnits.value = `${data ? data.units : ''}`;
 
   fieldsetCrmUnits.append(labelUnits, inputUnits);
@@ -183,9 +186,9 @@ export const showModal = async (err, data) => {
   inputCount.type = 'number';
   inputCount.name = 'count';
   inputCount.id = 'count';
-  inputCount.required = true;
+  // inputCount.required = true;
   inputCount.classList.add('crm-wrapper__input',
-      'crm__count-input', 'crm__sum-input');
+      'crm__count-input', 'crm__sum-input', 'elem-form-validate');
   inputCount.value = `${data ? data.count : ''}`;
 
   fieldsetCrmCount.append(labelCount, inputCount);
@@ -203,9 +206,9 @@ export const showModal = async (err, data) => {
   inputPrice.type = 'number';
   inputPrice.name = 'price';
   inputPrice.id = 'price';
-  inputPrice.required = true;
+  // inputPrice.required = true;
   inputPrice.classList.add('crm-wrapper__input',
-      'crm__price-input', 'crm__sum-input');
+      'crm__price-input', 'crm__sum-input', 'elem-form-validate');
   inputPrice.value = `${data ? data.price : ''}`;
 
   fieldsetCrmPrice.append(labelPrice, inputPrice);
@@ -232,7 +235,8 @@ export const showModal = async (err, data) => {
   inputImage.name = 'image';
   inputImage.id = 'image';
   inputImage.accept = 'image/*';
-  inputImage.classList.add('crm-wrapper__input', 'crm-image__input');
+  inputImage.classList.add('crm-wrapper__input',
+      'crm-image__input');
 
   fieldsetCrmImage.append(labelImage, inputImage);
   fieldsetCrmData.append(fieldsetCrmImage);
@@ -343,31 +347,117 @@ export const showModal = async (err, data) => {
         .value * +inputCount.value;
     span.textContent = `$ ${sum}`;
   });
+
+  // Валидация формы
+  const paternWord = /[^а-яёА-ЯЁ\s]/i;
+  const paternWordCir = /[^а-яёА-ЯЁ]/i;
+  const paternWordNumb = /[^0-9]/i;
+
+  const replaceValue = (selector, pattern) => {
+    selector.value =
+    selector.value.replace(pattern, '');
+  };
+
+  inputName.addEventListener('input', () => {
+    replaceValue(inputName, paternWord);
+  });
+
+  textareaDescription.addEventListener('input', () => {
+    replaceValue(textareaDescription, paternWord);
+  });
+
+  inputCategory.addEventListener('input', () => {
+    replaceValue(inputCategory, paternWord);
+  });
+
+  inputUnits.addEventListener('input', () => {
+    replaceValue(inputUnits, paternWordCir);
+  });
+
+  inputDiscountInner.addEventListener('input', () => {
+    replaceValue(inputDiscountInner, paternWordNumb);
+  });
+
+  inputCount.addEventListener('input', () => {
+    replaceValue(inputCount, paternWordNumb);
+  });
+
+  inputPrice.addEventListener('input', () => {
+    replaceValue(inputPrice, paternWordNumb);
+  });
+
+  const validateDetector = (list) => {
+    console.log('list: ', list);
+    let success = true;
+
+    const paternWord = /[а-яёА-ЯЁ\s]/i;
+    const paternWordCir = /[а-яёА-ЯЁ]/i;
+    const paternWordNumb = /[0-9]/i;
+
+    console.log(Array.isArray(list));
+    if (!Array.isArray(list)) {
+      console.log('list.name текстареа: ', list.name);
+      if (list.name === 'description') {
+        if (!paternWord.test(list.value)) {
+          success = false;
+          return success;
+        }
+      }
+    } else {
+      list.forEach(input => {
+        if (input.name === 'title' || input.name === 'category') {
+          if (!paternWord.test(input.value)) {
+            success = false;
+          }
+        }
+
+        if (input.name === 'units') {
+          if (!paternWordCir.test(input.value)) {
+            success = false;
+          }
+        }
+
+        if (input.name === 'count' || input.name === 'price') {
+          if (!paternWordNumb.test(input.value)) {
+            success = false;
+          }
+        }
+      });
+    }
+
+    return success;
+  };
+
   // Отправка данных из формы
   form.addEventListener('submit', async e => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    const newProduct = Object.fromEntries(formData);
-    newProduct.image = await formationToBase64(newProduct.image);
+    const formElementsInput = form.querySelectorAll('.elem-form-validate');
+    const formElementsArea = form.querySelector('.elem-form-validate-text');
+    if (validateDetector(formElementsInput) &&
+  validateDetector(formElementsArea) && formElementsArea.value.length >= 80) {
+      const formData = new FormData(e.target);
+      const newProduct = Object.fromEntries(formData);
+      newProduct.image = await formationToBase64(newProduct.image);
 
-    fetchRequest(url, {
-      method: 'POST',
-      body: newProduct,
-      callback(err) {
-        if (err) {
-          document.querySelector('.modal-error').classList.add('is-visible');
-          return;
-        }
-        document.querySelector('.table-list').textContent = '';
-        fetchRequest(url, {callback: renderGoods});
-        document.querySelector('.form').reset();
-        document.querySelector('.overlay').remove();
-        totalSumPage(span,
-            fetchRequest, url);
-      },
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+      fetchRequest(url, {
+        method: 'POST',
+        body: newProduct,
+        callback(err) {
+          if (err) {
+            document.querySelector('.modal-error').classList.add('is-visible');
+            return;
+          }
+          document.querySelector('.table-list').textContent = '';
+          fetchRequest(url, {callback: renderGoods});
+          document.querySelector('.form').reset();
+          document.querySelector('.overlay').remove();
+          totalSumPage(span,
+              fetchRequest, url);
+        },
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+    }
   });
 };
