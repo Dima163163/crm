@@ -2,8 +2,8 @@
 // Проверка при заполнении формы
 const validationInput = (inputName, textareaDescription,
     inputCategory, inputUnits, inputDiscountInner, inputCount, inputPrice) => {
-  const paternWord = /[^а-яёА-ЯЁ\s]/i;
-  const paternWordCir = /[^а-яёА-ЯЁ\s]/i;
+  const paternWord = /[^а-яёА-ЯЁa-zA-Z\s]/i;
+  const paternWordCir = /[^а-яёА-ЯЁa-zA-Z\s]/i;
   const paternWordNumb = /[^0-9]/i;
 
   const replaceValue = (selector, pattern) => {
