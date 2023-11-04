@@ -3,7 +3,7 @@ import formationToBase64 from './formationToBase64.js';
 import {fetchRequest} from './fetchRequest.js';
 import totalSumPage from './totalSumPage.js';
 import elements from './elementsPage.js';
-import {initGoods} from './renderPage.js';
+import {initGoods} from './initGoods.js';
 const {tableList, totalPriceSpanPage, numberPages} = elements;
 
 // Проверка заполненности формы при отправке
