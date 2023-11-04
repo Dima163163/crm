@@ -33,7 +33,7 @@ const searchGoods = (tableList, numberPages) => {
     `${(data.page - 1) * 10} - ${data.totalCount} of ${data.totalCount}`}`;
   };
 
-  const debounceUpadate = debounce(renderSearchGoods, 2200);
+  const debounceUpadate = debounce(renderSearchGoods, 300);
   inputSearch.addEventListener('input', debounceUpadate);
 };
 
