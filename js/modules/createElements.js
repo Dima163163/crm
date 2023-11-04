@@ -1,10 +1,6 @@
-import {fetchRequest} from './loadSendGoods.js';
-import {showModal} from './modal.js';
-import {URL as url} from '../script.js';
-
 // Функция создания строки с товаром
 const renderGoods = (err, data) => {
-  console.log(data)
+  console.log(data);
   if (err) {
     const h2 = document.createElement('h2');
     h2.style.color = 'red';
@@ -13,6 +9,8 @@ const renderGoods = (err, data) => {
         .insertAdjacentElement('afterend', h2);
     return;
   }
+
+  const template = document.createDocumentFragment();
   document.querySelector('.table-list').textContent = '';
   const goods = data.goods.map(item => {
     const tr = document.createElement('tr');
@@ -49,34 +47,10 @@ const renderGoods = (err, data) => {
 
     return tr;
   });
+  template.append(...goods);
 
-  document.querySelector('.table-list').append(...goods);
-
-  return new Promise(resolve => {
-    document.querySelector('.cms-wrapper__table').addEventListener('click',
-        async ({target}) => {
-          if (target.classList.contains('td-button-edit')) {
-            const checkGoods =
-            await fetchRequest(`${url}/${target.dataset.id}`, {
-              callback: showModal,
-            });
-            console.log(checkGoods);
-          }
-          if (target.classList.contains('cms-btn')) {
-            showModal();
-          }
-          if (target.classList.contains('td-button-delete')) {
-            const id = target.closest('.product-card')
-                .querySelector('.td-id').textContent;
-            await fetchRequest(`${url}/${id}`, {
-              method: 'DELETE',
-              callback: () => {
-                fetchRequest(url, {callback: renderGoods});
-              },
-            });
-          }
-        });
-  });
+  return template;
 };
+
 
 export default renderGoods;

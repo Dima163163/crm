@@ -6,6 +6,7 @@
 @import "crm.css";
 @import "cms.css";
 @import "table.css";
+@import "deleteModal.css";
 
 @font-face { 
     font-family: "Inter";

@@ -1,8 +1,12 @@
-import {fetchRequest} from './loadSendGoods.js';
 import {loadStyle} from './loadStyle.js';
-import {URL as url} from '../script.js';
-import renderGoods from './createElements.js';
-import {totalSumPage} from './control.js';
+import addsAnImage from './addsAnImage.js';
+import activationInputDiscount from './activationInputDiscount.js';
+import modalClose from './modalClose.js';
+import calculateTotalPriceModal from './calculateTotalPriceModal.js';
+import validationInput from './inputValidation.js';
+import formValidationAndSend from './validateFormAndSend.js';
+import modalErrorClose from './modalErrorClose.js';
+import {fetchRequest} from './fetchRequest.js';
 
 export const showModal = async (err, data) => {
   await loadStyle('style/modal.css');
@@ -106,14 +110,33 @@ export const showModal = async (err, data) => {
   labelCategory.classList.add('crm-wrapper__title', 'crm__category-title');
   labelCategory.textContent = 'Категория';
 
-  const inputCategory = document.createElement('input');
-  inputCategory.type = 'text';
+  const inputCategory = document.createElement('select');
   inputCategory.name = 'category';
   inputCategory.id = 'category';
-  // inputCategory.required = true;
   inputCategory.classList.add('crm-wrapper__input',
       'crm__category-input', 'elem-form-validate');
-  inputCategory.value = `${data ? data.category : ''}`;
+  const option = document.createElement('option');
+  if (data) {
+    option.value = data.category;
+    option.textContent = data.category;
+  } else {
+    option.value = '';
+    option.textContent = '';
+  }
+  inputCategory.append(option);
+
+  const dataOptions = await fetchRequest('/api/categories', {
+    callback: (err, data) => data,
+  });
+
+  const options = dataOptions.map(item => {
+    const option = document.createElement('option');
+    option.value = item;
+    option.textContent = item;
+    return option;
+  });
+  inputCategory.append(...options);
+
 
   fieldsetCrmCategory.append(labelCategory, inputCategory);
 
@@ -236,7 +259,8 @@ export const showModal = async (err, data) => {
   inputImage.id = 'image';
   inputImage.accept = 'image/*';
   inputImage.classList.add('crm-wrapper__input',
-      'crm-image__input');
+      'crm-image__input',
+  );
 
   fieldsetCrmImage.append(labelImage, inputImage);
   fieldsetCrmData.append(fieldsetCrmImage);
@@ -246,6 +270,10 @@ export const showModal = async (err, data) => {
 
   const imgCard = document.createElement('img');
   imgCard.classList.add('crm-product-card');
+  if (data) {
+    imgCard.src = `http://localhost:3000/${data.image}`;
+    imgCard.style = 'display: block';
+  }
 
   divImg.append(imgCard);
   form.append(divImg);
@@ -270,194 +298,55 @@ export const showModal = async (err, data) => {
 
   bottomWrapper.append(p, btn);
   modalWrapper.append(bottomWrapper);
-  modal.insertAdjacentHTML('beforeend', `
-    <div class="modal-error">
-      <button class="modal-close-error">
-        <img src="img/close.svg" alt="Кнопка закрытия" class="modal-close__img">
-      </button>
-      <div class="modal-error__wrapper">
-        <div class="modal-error__img"></div>
-        <p class="modal-error__text">
-          Что-то пошло не так
-        </p>
-      </div>
+
+  const modalError = document.createElement('div');
+  modalError.classList.add('modal-error');
+  const modalErrorBtn = document.createElement('button');
+  modalErrorBtn.classList.add('modal-close-error');
+  const modalErrorBtnImg = document.createElement('img');
+  modalErrorBtnImg.classList.add('modal-close__img');
+  modalErrorBtnImg.src = 'img/close.svg';
+  modalErrorBtnImg.alt = 'Кнопка закрытия';
+  modalErrorBtn.append(modalErrorBtnImg);
+  modalError.append(modalErrorBtn);
+  modalError.insertAdjacentHTML('beforeend', `
+    <div class="modal-error__wrapper">
+      <div class="modal-error__img"></div>
+      <p class="modal-error__text">
+        Что-то пошло не так
+      </p>
     </div>
   `);
 
+  modal.append(modalError);
+
   document.querySelector('body').append(overlay);
 
-  // Приведение файла изображения в Base64 формат
-  const formationToBase64 = file => new Promise((resolve, reject) => {
-    const reader = new FileReader();
+  // Вызов функции добавления картинки
+  addsAnImage(inputImage, imgCard, fieldsetWarning);
 
-    reader.addEventListener('loadend', () => {
-      resolve(reader.result);
-    });
+  // Вызов функции активации checkbox input discount
+  activationInputDiscount(form, inputDiscountChecbox, inputDiscountInner);
 
-    reader.addEventListener('error', err => {
-      reject(err);
-    });
+  // Вызов функции закрытия модального окна
+  modalClose(overlay);
 
-    reader.readAsDataURL(file);
-  });
+  // Вызов функции высчитывания общей стоимости товара в модальном окне
+  calculateTotalPriceModal(inputPrice, inputCount, span);
 
-  // Добавление файла изображения в модальное окно
-  inputImage.addEventListener('change', async () => {
-    if (inputImage.files.length > 0) {
-      if (inputImage.files[0].size <= 1000000) {
-        const src = URL.createObjectURL(inputImage.files[0]);
-        imgCard.src = src;
-        imgCard.style.display = 'block';
-        if (fieldsetWarning.style.display === 'block') {
-          fieldsetWarning.style = 'display: none';
-        }
-      } else {
-        fieldsetWarning.style = 'display: block';
-      }
-    }
-  });
+  // Вызов функции для проверки при заполении input
+  validationInput(inputName, textareaDescription,
+      inputCategory, inputUnits, inputDiscountInner, inputCount, inputPrice,
+  );
 
-  // Активация input discount
-  document.querySelector('.form').addEventListener('change', () => {
-    if (document.querySelector('.crm__checkbox-input').checked) {
-      document.querySelector('.crm__discont-input').disabled = false;
-    } else {
-      document.querySelector('.crm__checkbox-input').checked = false;
-      document.querySelector('.crm__discont-input').value = '';
-      document.querySelector('.crm__discont-input').disabled = true;
-    }
-  });
-  // Закрытие модального окна
-  overlay.addEventListener('click', (e) => {
-    const target = e.target;
-    if (target === document.querySelector('.overlay') ||
-    target.closest('.modal-close')) {
-      // overlay.classList.remove('is-visible');
-      overlay.remove();
-    }
-  });
-  // Высчитывание цены товара в модальном окне
-  inputPrice.addEventListener('blur', () => {
-    const sum = +document.querySelector('.crm__price-input')
-        .value * +document.querySelector('.crm__count-input').value;
-    document.querySelector('.total-cost-form__span').textContent = `$ ${sum}`;
-  });
-  inputCount.addEventListener('blur', () => {
-    const sum = +inputPrice
-        .value * +inputCount.value;
-    span.textContent = `$ ${sum}`;
-  });
+  // Вызов функции проверки формы перед отправкой
+  if (!data) {
+    formValidationAndSend(form, modalError, overlay, 'POST', '/api/goods');
+  } else {
+    formValidationAndSend(form, modalError, overlay, 'PATCH',
+        `/api/goods/${data.id}`);
+  }
 
-  // Валидация формы
-  const paternWord = /[^а-яёА-ЯЁ\s]/i;
-  const paternWordCir = /[^а-яёА-ЯЁ]/i;
-  const paternWordNumb = /[^0-9]/i;
-
-  const replaceValue = (selector, pattern) => {
-    selector.value =
-    selector.value.replace(pattern, '');
-  };
-
-  inputName.addEventListener('input', () => {
-    replaceValue(inputName, paternWord);
-  });
-
-  textareaDescription.addEventListener('input', () => {
-    replaceValue(textareaDescription, paternWord);
-  });
-
-  inputCategory.addEventListener('input', () => {
-    replaceValue(inputCategory, paternWord);
-  });
-
-  inputUnits.addEventListener('input', () => {
-    replaceValue(inputUnits, paternWordCir);
-  });
-
-  inputDiscountInner.addEventListener('input', () => {
-    replaceValue(inputDiscountInner, paternWordNumb);
-  });
-
-  inputCount.addEventListener('input', () => {
-    replaceValue(inputCount, paternWordNumb);
-  });
-
-  inputPrice.addEventListener('input', () => {
-    replaceValue(inputPrice, paternWordNumb);
-  });
-
-  const validateDetector = (list) => {
-    console.log('list: ', list);
-    let success = true;
-
-    const paternWord = /[а-яёА-ЯЁ\s]/i;
-    const paternWordCir = /[а-яёА-ЯЁ]/i;
-    const paternWordNumb = /[0-9]/i;
-
-    console.log(Array.isArray(list));
-    if (!Array.isArray(list)) {
-      console.log('list.name текстареа: ', list.name);
-      if (list.name === 'description') {
-        if (!paternWord.test(list.value)) {
-          success = false;
-          return success;
-        }
-      }
-    } else {
-      list.forEach(input => {
-        if (input.name === 'title' || input.name === 'category') {
-          if (!paternWord.test(input.value)) {
-            success = false;
-          }
-        }
-
-        if (input.name === 'units') {
-          if (!paternWordCir.test(input.value)) {
-            success = false;
-          }
-        }
-
-        if (input.name === 'count' || input.name === 'price') {
-          if (!paternWordNumb.test(input.value)) {
-            success = false;
-          }
-        }
-      });
-    }
-
-    return success;
-  };
-
-  // Отправка данных из формы
-  form.addEventListener('submit', async e => {
-    e.preventDefault();
-    const formElementsInput = form.querySelectorAll('.elem-form-validate');
-    const formElementsArea = form.querySelector('.elem-form-validate-text');
-    if (validateDetector(formElementsInput) &&
-  validateDetector(formElementsArea) && formElementsArea.value.length >= 80) {
-      const formData = new FormData(e.target);
-      const newProduct = Object.fromEntries(formData);
-      newProduct.image = await formationToBase64(newProduct.image);
-
-      fetchRequest(url, {
-        method: 'POST',
-        body: newProduct,
-        callback(err) {
-          if (err) {
-            document.querySelector('.modal-error').classList.add('is-visible');
-            return;
-          }
-          document.querySelector('.table-list').textContent = '';
-          fetchRequest(url, {callback: renderGoods});
-          document.querySelector('.form').reset();
-          document.querySelector('.overlay').remove();
-          totalSumPage(span,
-              fetchRequest, url);
-        },
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-    }
-  });
+  // Вызов функции закрытия модального окна с предупреждением
+  modalErrorClose(modalErrorBtn, modalError);
 };
