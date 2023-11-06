@@ -1,6 +1,5 @@
 
-const actionSelection = (btns, fetchRequest, renderGoods,
-    initGoods, numberPages, id, tableList, overlay) => {
+const actionSelection = (btns, fetchRequest, id, overlay) => {
   btns.forEach(btn => {
     btn.addEventListener('click', async (e) => {
       const target = e.target;
@@ -10,7 +9,6 @@ const actionSelection = (btns, fetchRequest, renderGoods,
           callback: () => {
           },
         });
-        initGoods(fetchRequest, renderGoods, tableList, numberPages);
         overlay.remove();
       } else {
         overlay.remove();
@@ -53,10 +51,8 @@ const showDeleteModal = (tableList, fetchRequest, renderGoods,
   document.querySelector('body').append(overlay);
 
   const btns = document.querySelectorAll('.btn-delete');
-  console.log('btns: ', btns);
 
-  actionSelection(btns, fetchRequest, renderGoods,
-      initGoods, numberPages, id, tableList, overlay);
+  actionSelection(btns, fetchRequest, id, overlay);
 };
 
 export default showDeleteModal;

@@ -9,6 +9,7 @@ const deleteGood = (tableList, fetchRequest, renderGoods,
           .querySelector('.td-id').textContent;
       showDeleteModal(tableList, fetchRequest,
           renderGoods, initGoods, numberPages, id);
+      e.target.closest('.product-card').remove();
     }
   });
 };
