@@ -4,7 +4,9 @@ import totalSumPage from './totalSumPage.js';
 import elements from './elementsPage.js';
 import renderGoods from './createElements.js';
 import changePage from './changePage.js';
-const {tableList, totalPriceSpanPage, btnLeft, btnRight} = elements;
+import {initGoods} from './initGoods.js';
+const {tableList, totalPriceSpanPage, btnLeft, btnRight,
+  numberPages} = elements;
 
 // Проверка заполненности формы при отправке
 const formValidationAndSend = (form, modalError, overlay,
@@ -58,7 +60,11 @@ const formValidationAndSend = (form, modalError, overlay,
       const formData = new FormData(e.target);
       const newProduct = Object.fromEntries(formData);
       newProduct.image = await formationToBase64(newProduct.image);
-      await fetchRequest('/api/goods', {
+      if (newProduct.image === 'data:application/octet-stream;base64,') {
+        newProduct.image = newProduct.imagedata;
+      }
+
+      await fetchRequest(postfix, {
         method: methodVal,
         body: newProduct,
         callback(err) {
@@ -71,25 +77,8 @@ const formValidationAndSend = (form, modalError, overlay,
           'Content-Type': 'application/json',
         },
       });
-      const {err, data} = await fetchRequest(postfix, {
-        callback: (err, data) => ({
-          err,
-          data,
-        }),
-      });
-      const {errPage, dataLastPage} =
-          await fetchRequest(`/api/goods?page=${data.pages}`, {
-            callback: (errPage, dataLastPage) => ({
-              errPage,
-              dataLastPage,
-            }),
-          });
-      const currentPage = +localStorage.getItem('page');
-
-      if (dataLastPage.page === currentPage) {
-        const goods = renderGoods(errPage, dataLastPage);
-        tableList.append(goods);
-      }
+      await initGoods(fetchRequest, renderGoods, tableList,
+          numberPages, `/api/goods`);
       form.reset();
       overlay.remove();
       totalSumPage(totalPriceSpanPage);

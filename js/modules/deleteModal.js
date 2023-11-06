@@ -1,3 +1,10 @@
+import renderGoods from './createElements.js';
+import createOverlay from './createOverlay.js';
+import {initGoods} from './initGoods.js';
+import elements from './elementsPage.js';
+import {loadStyle} from './loadStyle.js';
+import changePage from './changePage.js';
+const {tableList, numberPages, btnLeft, btnRight} = elements;
 
 const actionSelection = (btns, fetchRequest, id, overlay) => {
   btns.forEach(btn => {
@@ -9,6 +16,10 @@ const actionSelection = (btns, fetchRequest, id, overlay) => {
           callback: () => {
           },
         });
+        initGoods(fetchRequest, renderGoods, tableList,
+            numberPages, `/api/goods`);
+        changePage(fetchRequest, renderGoods,
+            tableList, btnLeft, btnRight);
         overlay.remove();
       } else {
         overlay.remove();
@@ -18,10 +29,9 @@ const actionSelection = (btns, fetchRequest, id, overlay) => {
 };
 
 
-const showDeleteModal = (tableList, fetchRequest, renderGoods,
-    initGoods, numberPages, id) => {
-  const overlay = document.createElement('div');
-  overlay.classList.add('overlay-delete', 'is-visible');
+const showDeleteModal = async (fetchRequest, id) => {
+  await loadStyle('style/modal.css');
+  const overlay = createOverlay();
 
   const modal = document.createElement('div');
   modal.classList.add('modal-delete');

@@ -7,12 +7,12 @@ import validationInput from './inputValidation.js';
 import formValidationAndSend from './validateFormAndSend.js';
 import modalErrorClose from './modalErrorClose.js';
 import {fetchRequest} from './fetchRequest.js';
+import createOverlay from './createOverlay.js';
 
 export const showModal = async (err, data) => {
   await loadStyle('style/modal.css');
 
-  const overlay = document.createElement('div');
-  overlay.classList.add('overlay', 'is-visible');
+  const overlay = createOverlay();
 
   const modal = document.createElement('div');
   modal.classList.add('modal');
@@ -264,6 +264,15 @@ export const showModal = async (err, data) => {
   inputImage.classList.add('crm-wrapper__input',
       'crm-image__input',
   );
+
+  const inpitImageData = document.createElement('input');
+  inpitImageData.classList.add('input-image-data');
+  inpitImageData.name = 'imagedata';
+  inpitImageData.style.display = 'none';
+  if (data.image) {
+    inpitImageData.value = data.image;
+  }
+  fieldsetCrmImage.append(inpitImageData);
 
   fieldsetCrmImage.append(labelImage, inputImage);
   fieldsetCrmData.append(fieldsetCrmImage);

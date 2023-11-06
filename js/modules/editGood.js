@@ -1,5 +1,5 @@
 
-const editGood = (tableList, fetchRequest, renderGoods,
+const editGood = async (tableList, fetchRequest, renderGoods,
     initGoods, numberPages, showModal) => {
   tableList.addEventListener('click', async (e) => {
     const target = e.target;
@@ -7,7 +7,8 @@ const editGood = (tableList, fetchRequest, renderGoods,
       await fetchRequest(`/api/goods/${target.dataset.id}`, {
         callback: (err, data) => {
           showModal(err, data);
-          initGoods(fetchRequest, renderGoods, tableList, numberPages);
+          initGoods(fetchRequest, renderGoods, tableList,
+              numberPages, `/api/goods`);
         },
       });
     }

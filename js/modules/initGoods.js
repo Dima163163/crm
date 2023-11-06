@@ -1,7 +1,7 @@
 
 export const initGoods = async (fetchRequest,
-    renderGoods, tableList, numberPages) => {
-  const {err, data} = await fetchRequest(`/api/goods`, {
+    renderGoods, tableList, numberPages, postfix) => {
+  const {err, data} = await fetchRequest(postfix, {
     callback: (err, data) => ({
       err,
       data,

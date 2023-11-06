@@ -22,15 +22,15 @@ const {
 
 
 const init = async () => {
-  await initGoods(fetchRequest, renderGoods, tableList, numberPages);
+  await initGoods(fetchRequest, renderGoods, tableList,
+      numberPages, `/api/goods`);
   changePage(fetchRequest, renderGoods,
       tableList, btnLeft, btnRight);
   totalSumPage(totalPriceSpanPage);
   // Вызов функции открытия изображения товара
   openAnImage(tableList);
   // Вызов функции удаления товара
-  deleteGood(tableList, fetchRequest, renderGoods,
-      initGoods, numberPages);
+  deleteGood(tableList, fetchRequest);
   editGood(tableList, fetchRequest, renderGoods,
       initGoods, numberPages, showModal);
   openModal(wrapperTable);
