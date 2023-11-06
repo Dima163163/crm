@@ -19,7 +19,6 @@ export const fetchRequest = async (postfix, {
 
     if (response.ok) {
       const data = await response.json();
-      console.log('data: ', data);
 
       if (callback) return callback(null, data);
       return;
