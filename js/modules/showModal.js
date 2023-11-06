@@ -75,6 +75,7 @@ export const showModal = async (err, data) => {
   const inputName = document.createElement('input');
   inputName.type = 'text';
   inputName.name = 'title';
+  inputName.required = true;
   inputName.classList.add('crm-wrapper__input',
       'crm__name-input', 'elem-form-validate');
   inputName.value = `${data ? data.title : ''}`;
@@ -94,7 +95,7 @@ export const showModal = async (err, data) => {
   const textareaDescription = document.createElement('textarea');
   textareaDescription.name = 'description';
   textareaDescription.id = 'description';
-  // textareaDescription.required = true;
+  textareaDescription.required = true;
   textareaDescription.classList.add('crm-wrapper__textarea',
       'crm__descpiption-textarea', 'elem-form-validate-text');
   textareaDescription.value = `${data ? data.description : ''}`;
@@ -113,6 +114,7 @@ export const showModal = async (err, data) => {
   const inputCategory = document.createElement('select');
   inputCategory.name = 'category';
   inputCategory.id = 'category';
+  inputName.required = true;
   inputCategory.classList.add('crm-wrapper__input',
       'crm__category-input', 'elem-form-validate');
   const option = document.createElement('option');
@@ -153,7 +155,7 @@ export const showModal = async (err, data) => {
   inputUnits.type = 'text';
   inputUnits.name = 'units';
   inputUnits.id = 'units';
-  // inputUnits.required = true;
+  inputUnits.required = true;
   inputUnits.classList.add('crm-wrapper__input',
       'crm__units-input', 'elem-form-validate');
   inputUnits.value = `${data ? data.units : ''}`;
@@ -209,7 +211,7 @@ export const showModal = async (err, data) => {
   inputCount.type = 'number';
   inputCount.name = 'count';
   inputCount.id = 'count';
-  // inputCount.required = true;
+  inputCount.required = true;
   inputCount.classList.add('crm-wrapper__input',
       'crm__count-input', 'crm__sum-input', 'elem-form-validate');
   inputCount.value = `${data ? data.count : ''}`;
@@ -229,7 +231,7 @@ export const showModal = async (err, data) => {
   inputPrice.type = 'number';
   inputPrice.name = 'price';
   inputPrice.id = 'price';
-  // inputPrice.required = true;
+  inputPrice.required = true;
   inputPrice.classList.add('crm-wrapper__input',
       'crm__price-input', 'crm__sum-input', 'elem-form-validate');
   inputPrice.value = `${data ? data.price : ''}`;

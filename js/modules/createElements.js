@@ -1,6 +1,5 @@
 // Функция создания строки с товаром
 const renderGoods = (err, data) => {
-  console.log(data);
   if (err) {
     const h2 = document.createElement('h2');
     h2.style.color = 'red';
@@ -15,7 +14,6 @@ const renderGoods = (err, data) => {
   const goods = data.goods.map(item => {
     const tr = document.createElement('tr');
     tr.classList.add('product-card');
-
     let totalSum;
     if (item.discount) {
       totalSum = Math.ceil(item.price * item.count -
