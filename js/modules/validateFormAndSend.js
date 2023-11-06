@@ -58,8 +58,7 @@ const formValidationAndSend = (form, modalError, overlay,
       const formData = new FormData(e.target);
       const newProduct = Object.fromEntries(formData);
       newProduct.image = await formationToBase64(newProduct.image);
-      console.log('newProduct: ', newProduct);
-      await fetchRequest('POST', {
+      await fetchRequest('/api/goods', {
         method: methodVal,
         body: newProduct,
         callback(err) {
@@ -67,14 +66,12 @@ const formValidationAndSend = (form, modalError, overlay,
             modalError.classList.add('is-visible');
             return;
           }
-          // initGoods(fetchRequest,
-          //     renderGoods, tableList, numberPages);
         },
         headers: {
           'Content-Type': 'application/json',
         },
       });
-      const {err, data} = await fetchRequest(`/api/goods`, {
+      const {err, data} = await fetchRequest(postfix, {
         callback: (err, data) => ({
           err,
           data,
@@ -87,39 +84,8 @@ const formValidationAndSend = (form, modalError, overlay,
           dataLastPage,
         }),
       });
-      const tr = document.createElement('tr');
-      tr.classList.add('product-card');
-      let totalSum;
-      if (newProduct.discount) {
-        totalSum = Math.ceil(newProduct.price * newProduct.count -
-        (newProduct.price * newProduct.count *
-        (newProduct.discount / 100)));
-      } else {
-        totalSum = newProduct.price * newProduct.count;
-      }
-      tr.insertAdjacentHTML('beforeend', `
-          <td class="td-id">
-          ${dataLastPage.goods[dataLastPage.goods.length - 1].id}</td>
-          <td class="td-title">${newProduct.title}</td>
-          <td>${newProduct.category}</td>
-          <td class="td-unit">${newProduct.units}</td>
-          <td class="td-sum">${+newProduct.count}</td>
-          <td class="td-disc">${newProduct.discount}</td>
-          <td>${+newProduct.price}</td>
-          <td>${totalSum}</td>
-          <td class="td-last">
-            <div class="td-btn-wrapper">
-              <a class="td-button td-button-image"
-              data-pic="${newProduct.image}"
-              href=""></a>
-              <button class="td-button td-button-edit" 
-              data-id="${newProduct.id}">
-              </button>
-              <button class="td-button td-button-delete"></button>
-            </div>
-          </td>
-      `);
-      tableList.append(tr);
+      const goods = renderGoods(errPage, dataLastPage);
+      tableList.append(goods);
       form.reset();
       overlay.remove();
       totalSumPage(totalPriceSpanPage);
