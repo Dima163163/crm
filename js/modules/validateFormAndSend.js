@@ -2,9 +2,9 @@ import formationToBase64 from './formationToBase64.js';
 import {fetchRequest} from './fetchRequest.js';
 import totalSumPage from './totalSumPage.js';
 import elements from './elementsPage.js';
-import { initGoods } from './initGoods.js';
 import renderGoods from './createElements.js';
-const {tableList, totalPriceSpanPage, numberPages} = elements;
+import changePage from './changePage.js';
+const {tableList, totalPriceSpanPage, btnLeft, btnRight} = elements;
 
 // Проверка заполненности формы при отправке
 const formValidationAndSend = (form, modalError, overlay,
@@ -89,6 +89,8 @@ const formValidationAndSend = (form, modalError, overlay,
       form.reset();
       overlay.remove();
       totalSumPage(totalPriceSpanPage);
+      changePage(fetchRequest, renderGoods,
+          tableList, btnLeft, btnRight);
     }
   });
 };
