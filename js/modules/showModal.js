@@ -96,6 +96,7 @@ export const showModal = async (err, data) => {
   textareaDescription.name = 'description';
   textareaDescription.id = 'description';
   textareaDescription.required = true;
+  textareaDescription.minLength = 10;
   textareaDescription.classList.add('crm-wrapper__textarea',
       'crm__descpiption-textarea', 'elem-form-validate-text');
   textareaDescription.value = `${data ? data.description : ''}`;
