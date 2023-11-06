@@ -74,11 +74,17 @@ const formValidationAndSend = (form, modalError, overlay,
           'Content-Type': 'application/json',
         },
       });
-      const page = localStorage.getItem('page');
-      const {err, data} = await fetchRequest(`/api/goods?page=${page}`, {
+      const {err, data} = await fetchRequest(`/api/goods`, {
         callback: (err, data) => ({
           err,
           data,
+        }),
+      });
+      const {errPage, dataLastPage} =
+      await fetchRequest(`/api/goods?page=${data.pages}`, {
+        callback: (errPage, dataLastPage) => ({
+          errPage,
+          dataLastPage,
         }),
       });
       const tr = document.createElement('tr');
@@ -91,9 +97,9 @@ const formValidationAndSend = (form, modalError, overlay,
       } else {
         totalSum = newProduct.price * newProduct.count;
       }
-
       tr.insertAdjacentHTML('beforeend', `
-          <td class="td-id">${data.goods[data.goods.length - 1].id}</td>
+          <td class="td-id">
+          ${dataLastPage.goods[dataLastPage.goods.length - 1].id}</td>
           <td class="td-title">${newProduct.title}</td>
           <td>${newProduct.category}</td>
           <td class="td-unit">${newProduct.units}</td>

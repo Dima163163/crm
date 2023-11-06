@@ -18,7 +18,6 @@ const changePage = async (fetchRequest, renderGoods,
         callback: (err, data) => data,
       });
       currentPage = data.page;
-      localStorage.setItem('page', currentPage);
       document.querySelector('.number-pages').textContent =
         `${data.page === 1 ? `1-${data.goods.length} of ${data.totalCount}` :
         `${((data.page - 1) * 10) + 1} - ${data.totalCount} 
@@ -36,7 +35,6 @@ const changePage = async (fetchRequest, renderGoods,
         callback: (err, data) => data,
       });
       currentPage = data.page;
-      localStorage.setItem('page', currentPage);
       document.querySelector('.number-pages').textContent =
       `${data.page === 1 ? `1-${data.goods.length} of ${data.totalCount}` :
       `${((data.page - 1) * 10) + 1} - ${data.totalCount} 
