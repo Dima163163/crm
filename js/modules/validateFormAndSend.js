@@ -78,14 +78,18 @@ const formValidationAndSend = (form, modalError, overlay,
         }),
       });
       const {errPage, dataLastPage} =
-      await fetchRequest(`/api/goods?page=${data.pages}`, {
-        callback: (errPage, dataLastPage) => ({
-          errPage,
-          dataLastPage,
-        }),
-      });
-      const goods = renderGoods(errPage, dataLastPage);
-      tableList.append(goods);
+          await fetchRequest(`/api/goods?page=${data.pages}`, {
+            callback: (errPage, dataLastPage) => ({
+              errPage,
+              dataLastPage,
+            }),
+          });
+      const currentPage = +localStorage.getItem('page');
+
+      if (dataLastPage.page === currentPage) {
+        const goods = renderGoods(errPage, dataLastPage);
+        tableList.append(goods);
+      }
       form.reset();
       overlay.remove();
       totalSumPage(totalPriceSpanPage);

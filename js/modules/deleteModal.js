@@ -8,9 +8,9 @@ const actionSelection = (btns, fetchRequest, renderGoods,
         await fetchRequest(`/api/goods/${id}`, {
           method: 'DELETE',
           callback: () => {
-            initGoods(fetchRequest, renderGoods, tableList, numberPages);
           },
         });
+        initGoods(fetchRequest, renderGoods, tableList, numberPages);
         overlay.remove();
       } else {
         overlay.remove();
