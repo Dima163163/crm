@@ -2,19 +2,10 @@ import {fetchRequest} from './fetchRequest.js';
 import elements from './elementsPage.js';
 import renderGoods from './createElements.js';
 import {initGoods} from './initGoods.js';
+import debounce from './debounce.js';
 const {inputSearch} = elements;
 
 const searchGoods = (tableList, numberPages) => {
-  const debounce = (func, timeoutMS) => {
-    let timeout;
-    return function() {
-      const context = this;
-      const args = arguments;
-      clearTimeout(timeout);
-      timeout = setTimeout(() => func.apply(context, args), timeoutMS);
-    };
-  };
-
   const renderSearchGoods = async () => {
     const value = inputSearch.value;
 

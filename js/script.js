@@ -11,6 +11,8 @@ import renderGoods from './modules/createElements.js';
 import elements from './modules/elementsPage.js';
 import {showModal} from './modules/showModal.js';
 import searchGoods from './modules/searchGoods.js';
+import createOptionsFilter from './modules/createOptionsFilter.js';
+import searchFilter from './modules/serachFilter.js';
 const {
   totalPriceSpanPage,
   tableList,
@@ -18,12 +20,16 @@ const {
   numberPages,
   btnLeft,
   btnRight,
+  cmsFilterBtn,
+  cmsFilterPlaceholder,
+  cmsFilterWrapper,
 } = elements;
 
 
 const init = async () => {
   await initGoods(fetchRequest, renderGoods, tableList,
       numberPages, `/api/goods`);
+  await createOptionsFilter(cmsFilterBtn);
   changePage(fetchRequest, renderGoods,
       tableList, btnLeft, btnRight);
   totalSumPage(totalPriceSpanPage);
@@ -35,6 +41,8 @@ const init = async () => {
       initGoods, numberPages, showModal);
   openModal(wrapperTable);
   searchGoods(tableList, numberPages);
+  searchFilter(cmsFilterBtn, tableList, numberPages,
+      cmsFilterPlaceholder, cmsFilterWrapper);
 };
 
 init();

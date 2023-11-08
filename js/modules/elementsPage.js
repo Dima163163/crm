@@ -9,6 +9,9 @@ const btnRight = document.querySelector('.btn-right');
 const numberPages = document.querySelector('.number-pages');
 const wrapperTable = document.querySelector('.cms-wrapper__table');
 const inputSearch = document.querySelector('.cms-search__input');
+const cmsFilterBtn = document.querySelector('.cms-button');
+const cmsFilterPlaceholder = document.querySelector('.cms-filter-placeholder');
+const cmsFilterWrapper = document.querySelector('.cms-filter');
 
 export default {
   body,
@@ -22,4 +25,7 @@ export default {
   numberPages,
   wrapperTable,
   inputSearch,
+  cmsFilterBtn,
+  cmsFilterPlaceholder,
+  cmsFilterWrapper,
 };

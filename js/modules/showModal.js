@@ -269,7 +269,9 @@ export const showModal = async (err, data) => {
   inpitImageData.classList.add('input-image-data');
   inpitImageData.name = 'imagedata';
   inpitImageData.style.display = 'none';
-  if (data.image) {
+  if (!data) {
+    inpitImageData.value = '';
+  } else {
     inpitImageData.value = data.image;
   }
   fieldsetCrmImage.append(inpitImageData);

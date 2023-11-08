@@ -47,6 +47,13 @@
 	gap: 20px
 }
 
+.cms-filter,
+.cms-button {
+	width: 108px;
+	height: 40px;
+	position: relative;
+}
+
 .cms-button {
 	padding: 10px;
 	color: var(--dark-blue, #25213B);
@@ -56,9 +63,8 @@
 	line-height: normal;
 	display: flex;
 	align-items: center;
+	appearance: none;
 	gap: 10px;
-	max-width: 108px;
-	min-height: 40px;
 	border-radius: 6px;
 	border: 1px solid var(--fonts-stroke, #C6C2DE);
 	background: var(--white, #FFF);
@@ -103,6 +109,18 @@
 	font-weight: 600;
 	line-height: normal;
 	text-transform: uppercase;
+	max-height: 39px;
+}
+
+.cms-filter-placeholder {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	position: absolute;
+	z-index: 2;
+	top: 10px;
+	left: 10px;
+	pointer-events: none;
 }
 
 .number-pages {

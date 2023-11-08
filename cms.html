@@ -28,19 +28,17 @@
 			<div class="cms-wrapper__table">
 				<div class="cms-top">
 					<div class="cms-wrapper__search">
-						<button class="cms-button">
-						<svg class="cms-wrapper__table-button-img" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<div class="cms-filter">
+							<div class="cms-filter-placeholder">
+								<svg class="cms-wrapper__table-button-img" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<g clip-path="url(#clip0_1_62)">
 							<path d="M12 12L20 4V0H0V4L8 12V20L12 16V12Z" fill="#8B83BA"/>
 							</g>
-							<defs>
-							<clip-path id="clip0_1_62">
-							<rect width="20" height="20" fill="white"/>
-							</clip-path>
-							</defs>
-						</svg>
-						Фильтр
-						</button>
+								</svg>
+								Фильтр
+							</div>
+							<select name="cms-button" id="cms-button" class="cms-button"></select>
+						</div>
 						<fieldset class="cms-search">
 							<div class="cms-search__img"></div>
 							<input class="cms-search__input" type="text" placeholder="Поиск по наименованию и категории">
