@@ -112,21 +112,27 @@ export const showModal = async (err, data) => {
   labelCategory.classList.add('crm-wrapper__title', 'crm__category-title');
   labelCategory.textContent = 'Категория';
 
-  const inputCategory = document.createElement('select');
+  const inputCategory = document.createElement('input');
   inputCategory.name = 'category';
   inputCategory.id = 'category';
+  inputCategory.type = 'text';
+  inputCategory.setAttribute('list', 'category-list');
+
   inputName.required = true;
   inputCategory.classList.add('crm-wrapper__input',
       'crm__category-input', 'elem-form-validate');
-  const option = document.createElement('option');
+
+  const dataList = document.createElement('datalist');
+  dataList.id = 'category-list';
+
   if (data) {
-    option.value = data.category;
-    option.textContent = data.category;
+    inputCategory.value = data.category;
+    inputCategory.textContent = data.category;
   } else {
-    option.value = '';
-    option.textContent = '';
+    inputCategory.value = '';
+    inputCategory.textContent = '';
   }
-  inputCategory.append(option);
+  inputCategory.append(dataList);
 
   const dataOptions = await fetchRequest('/api/categories', {
     callback: (err, data) => data,
@@ -138,7 +144,7 @@ export const showModal = async (err, data) => {
     option.textContent = item;
     return option;
   });
-  inputCategory.append(...options);
+  dataList.append(...options);
 
 
   fieldsetCrmCategory.append(labelCategory, inputCategory);
